@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
-import ArcoVue from '@arco-design/web-vue';
-import ArcoVueIcon from '@arco-design/web-vue/es/icon';
+// import ArcoVue from '@arco-design/web-vue';
+import Antdv from 'ant-design-vue';
+import 'ant-design-vue/dist/reset.css';
+// import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import globalComponents from '@/components';
 import router from './router';
 import store from './store';
@@ -16,8 +18,10 @@ import '@/api/interceptor';
 
 const app = createApp(App);
 
-app.use(ArcoVue, {});
-app.use(ArcoVueIcon);
+app.use(Antdv);
+// app.use(ArcoVue, {});
+
+// app.use(ArcoVueIcon);
 
 app.use(router);
 app.use(store);
