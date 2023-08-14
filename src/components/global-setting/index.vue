@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import { Message } from '@arco-design/web-vue';
+  import { message as Message } from 'ant-design-vue';
   import { useI18n } from 'vue-i18n';
   import { useClipboard } from '@vueuse/core';
   import { useAppStore } from '@/store';

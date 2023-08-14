@@ -1,5 +1,5 @@
 import { useRouter } from 'vue-router';
-import { Message } from '@arco-design/web-vue';
+import { message as Message } from 'ant-design-vue';
 
 import { useUserStore } from '@/store';
 

@@ -25,7 +25,12 @@
     <ul class="right-side">
       <li>
         <a-tooltip :content="$t('settings.search')">
-          <a-button class="nav-btn" type="outline" :shape="'circle'">
+          <a-button
+            class="nav-btn"
+            type="outline"
+            :shape="'circle'"
+            :icon="h(SearchOutlined)"
+          >
             <template #icon>
               <icon-search />
             </template>
@@ -38,12 +43,9 @@
             class="nav-btn"
             type="outline"
             :shape="'circle'"
+            :icon="h(GlobalOutlined)"
             @click="setDropDownVisible"
-          >
-            <template #icon>
-              <icon-language />
-            </template>
-          </a-button>
+          ></a-button>
         </a-tooltip>
         <a-dropdown trigger="click" @select="changeLocale as any">
           <div ref="triggerBtn" class="trigger-btn"></div>
@@ -76,8 +78,8 @@
             @click="handleToggleTheme"
           >
             <template #icon>
-              <icon-moon-fill v-if="theme === 'dark'" />
-              <icon-sun-fill v-else />
+              <IconMoonOutlined v-if="theme === 'dark'" />
+              <IconSunOutlined v-else />
             </template>
           </a-button>
         </a-tooltip>
@@ -90,9 +92,9 @@
                 class="nav-btn"
                 type="outline"
                 :shape="'circle'"
+                :icon="h(BellOutlined)"
                 @click="setPopoverVisible"
               >
-                <icon-notification />
               </a-button>
             </a-badge>
           </div>
@@ -121,12 +123,9 @@
             class="nav-btn"
             type="outline"
             :shape="'circle'"
+            :icon="isFullscreen ? h(CompressOutlined) : h(ExpandOutlined)"
             @click="toggleFullScreen"
           >
-            <template #icon>
-              <icon-fullscreen-exit v-if="isFullscreen" />
-              <icon-fullscreen v-else />
-            </template>
           </a-button>
         </a-tooltip>
       </li>
@@ -136,11 +135,9 @@
             class="nav-btn"
             type="outline"
             :shape="'circle'"
+            :icon="h(SettingOutlined)"
             @click="setVisible"
           >
-            <template #icon>
-              <icon-settings />
-            </template>
           </a-button>
         </a-tooltip>
       </li>
@@ -152,39 +149,41 @@
           >
             <img alt="avatar" :src="avatar" />
           </a-avatar>
-          <template #content>
-            <a-doption>
-              <a-space @click="switchRoles">
-                <icon-tag />
-                <span>
-                  {{ $t('messageBox.switchRoles') }}
-                </span>
-              </a-space>
-            </a-doption>
-            <a-doption>
-              <a-space @click="$router.push({ name: 'Info' })">
-                <icon-user />
-                <span>
-                  {{ $t('messageBox.userCenter') }}
-                </span>
-              </a-space>
-            </a-doption>
-            <a-doption>
-              <a-space @click="$router.push({ name: 'Setting' })">
-                <icon-settings />
-                <span>
-                  {{ $t('messageBox.userSettings') }}
-                </span>
-              </a-space>
-            </a-doption>
-            <a-doption>
-              <a-space @click="handleLogout">
-                <icon-export />
-                <span>
-                  {{ $t('messageBox.logout') }}
-                </span>
-              </a-space>
-            </a-doption>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item>
+                <a-space @click="switchRoles">
+                  <TagOutlined />
+                  <span>
+                    {{ $t('messageBox.switchRoles') }}
+                  </span>
+                </a-space>
+              </a-menu-item>
+              <a-menu-item>
+                <a-space @click="$router.push({ name: 'Info' })">
+                  <UserOutlined />
+                  <span>
+                    {{ $t('messageBox.userCenter') }}
+                  </span>
+                </a-space>
+              </a-menu-item>
+              <a-menu-item>
+                <a-space @click="$router.push({ name: 'Setting' })">
+                  <SettingOutlined />
+                  <span>
+                    {{ $t('messageBox.userSettings') }}
+                  </span>
+                </a-space>
+              </a-menu-item>
+              <a-menu-item>
+                <a-space @click="handleLogout">
+                  <LogoutOutlined />
+                  <span>
+                    {{ $t('messageBox.logout') }}
+                  </span>
+                </a-space>
+              </a-menu-item>
+            </a-menu>
           </template>
         </a-dropdown>
       </li>
@@ -193,14 +192,27 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, inject } from 'vue';
-  import { Message } from '@arco-design/web-vue';
+  import { computed, ref, inject, h } from 'vue';
+  import { message as Message } from 'ant-design-vue';
+  import {
+    SearchOutlined,
+    GlobalOutlined,
+    BellOutlined,
+    ExpandOutlined,
+    CompressOutlined,
+    SettingOutlined,
+    TagOutlined,
+    UserOutlined,
+    LogoutOutlined,
+  } from '@ant-design/icons-vue';
   import { useDark, useToggle, useFullscreen } from '@vueuse/core';
   import { useAppStore, useUserStore } from '@/store';
   import { LOCALE_OPTIONS } from '@/locale';
   import useLocale from '@/hooks/locale';
   import useUser from '@/hooks/user';
   import Menu from '@/components/menu/index.vue';
+  import IconMoonOutlined from '@/assets/svgIcons/icon-moon-outlined.vue';
+  import IconSunOutlined from '@/assets/svgIcons/icon-sun-outlined.vue';
   import MessageBox from '../message-box/index.vue';
 
   const appStore = useAppStore();

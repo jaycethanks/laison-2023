@@ -1,11 +1,11 @@
 <template>
-  <a-layout class="layout" :class="{ mobile: appStore.hideMenu }">
+  <Layout class="layout" :class="{ mobile: appStore.hideMenu }">
     <div v-if="navbar" class="layout-navbar">
       <NavBar />
     </div>
-    <a-layout>
-      <a-layout>
-        <a-layout-sider
+    <Layout>
+      <Layout>
+        <LayoutSider
           v-if="renderMenu"
           v-show="!hideMenu"
           class="layout-sider"
@@ -20,7 +20,7 @@
           <div class="menu-wrapper">
             <Menu />
           </div>
-        </a-layout-sider>
+        </LayoutSider>
         <a-drawer
           v-if="hideMenu"
           :visible="drawerVisible"
@@ -32,19 +32,20 @@
         >
           <Menu />
         </a-drawer>
-        <a-layout class="layout-content" :style="paddingStyle">
+        <Layout class="layout-content" :style="paddingStyle">
           <TabBar v-if="appStore.tabBar" />
-          <a-layout-content>
+          <LayoutContent>
             <PageLayout />
-          </a-layout-content>
+          </LayoutContent>
           <Footer v-if="footer" />
-        </a-layout>
-      </a-layout>
-    </a-layout>
-  </a-layout>
+        </Layout>
+      </Layout>
+    </Layout>
+  </Layout>
 </template>
 
 <script lang="ts" setup>
+  import { Layout, LayoutContent, LayoutSider } from 'ant-design-vue';
   import { ref, computed, watch, provide, onMounted } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
   import { useAppStore, useUserStore } from '@/store';

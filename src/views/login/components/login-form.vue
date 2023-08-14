@@ -8,10 +8,12 @@
       :model="userInfo"
       class="login-form"
       layout="vertical"
-      @submit="handleSubmit"
+      @finish="handleSubmit"
+      @finishFailed="onFinishFailed"
     >
       <a-form-item
-        field="username"
+        label="Username"
+        name="username"
         :rules="[{ required: true, message: $t('login.form.userName.errMsg') }]"
         :validate-trigger="['change', 'blur']"
         hide-label
@@ -26,7 +28,8 @@
         </a-input>
       </a-form-item>
       <a-form-item
-        field="password"
+        label="Password"
+        name="password"
         :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
         :validate-trigger="['change', 'blur']"
         hide-label
@@ -66,8 +69,8 @@
 <script lang="ts" setup>
   import { ref, reactive } from 'vue';
   import { useRouter } from 'vue-router';
-  import { Message } from '@arco-design/web-vue';
-  import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
+  import { message as Message } from 'ant-design-vue';
+  // import { ValidatedError } from "ant-design-vue"
   import { useI18n } from 'vue-i18n';
   import { useStorage } from '@vueuse/core';
   import { useUserStore } from '@/store';
@@ -90,14 +93,10 @@
     password: loginConfig.value.password,
   });
 
-  const handleSubmit = async ({
-    errors,
-    values,
-  }: {
-    errors: Record<string, ValidatedError> | undefined;
-    values: Record<string, any>;
-  }) => {
+  const handleSubmit = async (values: any) => {
+    console.log('[values]: ', values);
     if (loading.value) return;
+    const errors = false;
     if (!errors) {
       setLoading(true);
       try {
@@ -122,6 +121,10 @@
         setLoading(false);
       }
     }
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
   };
   const setRememberPassword = (value: boolean) => {
     loginConfig.value.rememberPassword = value;

@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 // import ArcoVue from '@arco-design/web-vue';
 import Antdv from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
+// import '@arco-design/web-vue/dist/arco.css';
 // import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import globalComponents from '@/components';
 import router from './router';
