@@ -1,11 +1,12 @@
 <template>
   <div class="container">
     <div class="logo">
-      <img
+      <!-- <img
         alt="logo"
         src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-      />
-      <div class="logo-text">Arco Design Pro</div>
+      /> -->
+      <Logo />
+      <div class="logo-text">Laison Tech</div>
     </div>
     <LoginBanner />
     <div class="content">
@@ -21,6 +22,7 @@
 
 <script lang="ts" setup>
   import Footer from '@/components/footer/index.vue';
+  import Logo from '@/assets/logo.svg';
   import LoginBanner from './components/banner.vue';
   import LoginForm from './components/login-form.vue';
 </script>
@@ -29,12 +31,10 @@
   .container {
     display: flex;
     height: 100vh;
-
     .banner {
       width: 550px;
       background: linear-gradient(163.85deg, #1d2129 0%, #00308f 100%);
     }
-
     .content {
       position: relative;
       display: flex;
@@ -73,8 +73,14 @@
   // responsive
   @media (max-width: @screen-lg) {
     .container {
+      .logo {
+        .logo-text {
+          color: #000;
+        }
+      }
       .banner {
-        width: 25%;
+        display: none;
+        // width: 25%;
       }
     }
   }

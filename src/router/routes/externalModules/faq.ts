@@ -3,7 +3,7 @@ export default {
   name: 'faq',
   meta: {
     locale: 'menu.faq',
-    icon: 'icon-question-circle',
+    icon: 'question-circle-outlined',
     requiresAuth: true,
     order: 9,
   },

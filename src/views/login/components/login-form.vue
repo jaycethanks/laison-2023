@@ -23,7 +23,7 @@
           :placeholder="$t('login.form.userName.placeholder')"
         >
           <template #prefix>
-            <icon-user />
+            <UserOutlined />
           </template>
         </a-input>
       </a-form-item>
@@ -40,20 +40,19 @@
           allow-clear
         >
           <template #prefix>
-            <icon-lock />
+            <LockOutlined />
           </template>
         </a-input-password>
       </a-form-item>
       <a-space :size="16" direction="vertical">
         <div class="login-form-password-actions">
           <a-checkbox
-            checked="rememberPassword"
-            :model-value="loginConfig.rememberPassword"
+            :checked="loginConfig.rememberPassword"
             @change="setRememberPassword as any"
           >
             {{ $t('login.form.rememberPassword') }}
           </a-checkbox>
-          <a-link>{{ $t('login.form.forgetPassword') }}</a-link>
+          <a>{{ $t('login.form.forgetPassword') }}</a>
         </div>
         <a-button type="primary" html-type="submit" long :loading="loading">
           {{ $t('login.form.login') }}
@@ -67,15 +66,17 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive } from 'vue';
+  import { ref, reactive, h } from 'vue';
   import { useRouter } from 'vue-router';
   import { message as Message } from 'ant-design-vue';
+  import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
   // import { ValidatedError } from "ant-design-vue"
   import { useI18n } from 'vue-i18n';
   import { useStorage } from '@vueuse/core';
   import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
   import type { LoginData } from '@/api/user';
+  import { CheckboxChangeEvent } from 'ant-design-vue/es/_util/EventInterface';
 
   const router = useRouter();
   const { t } = useI18n();
@@ -126,8 +127,11 @@
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
-  const setRememberPassword = (value: boolean) => {
-    loginConfig.value.rememberPassword = value;
+  const setRememberPassword = (e: CheckboxChangeEvent) => {
+    const { checked } = e.target;
+    if (typeof checked !== 'undefined') {
+      loginConfig.value.rememberPassword = checked;
+    }
   };
 </script>
 

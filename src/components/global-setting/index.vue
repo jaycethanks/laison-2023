@@ -1,10 +1,6 @@
 <template>
   <div v-if="!appStore.navbar" class="fixed-settings" @click="setVisible">
-    <a-button type="primary">
-      <template #icon>
-        <icon-settings />
-      </template>
-    </a-button>
+    <a-button type="primary" :icon="h(SettingOutlined)"> </a-button>
   </div>
   <a-drawer
     :width="300"
@@ -23,7 +19,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
+  import { computed, h } from 'vue';
+  import SettingOutlined from '@ant-design/icons-vue';
   import { message as Message } from 'ant-design-vue';
   import { useI18n } from 'vue-i18n';
   import { useClipboard } from '@vueuse/core';

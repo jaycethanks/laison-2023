@@ -76,7 +76,7 @@ setupMock({
           meta: {
             locale: 'menu.server.dashboard',
             requiresAuth: true,
-            icon: 'icon-dashboard',
+            icon: 'dashboard-outlined',
             order: 1,
           },
           children: [

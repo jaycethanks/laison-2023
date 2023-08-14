@@ -13,7 +13,7 @@
         >
           Laison Tech
         </a-typography-title>
-        <icon-menu-fold
+        <MenuFoldOutlined
           v-if="!topMenu && appStore.device === 'mobile'"
           style="font-size: 22px; cursor: pointer"
           @click="toggleDrawerMenu"
@@ -33,7 +33,7 @@
             :icon="h(SearchOutlined)"
           >
             <template #icon>
-              <icon-search />
+              <SearchOutlined />
             </template>
           </a-button>
         </a-tooltip>
@@ -50,17 +50,13 @@
         </a-tooltip>
         <a-dropdown trigger="click" @select="changeLocale as any">
           <div ref="triggerBtn" class="trigger-btn"></div>
-          <template #content>
-            <a-doption
-              v-for="item in locales"
-              :key="item.value"
-              :value="item.value"
-            >
-              <template #icon>
-                <icon-check v-show="item.value === currentLocale" />
-              </template>
-              {{ item.label }}
-            </a-doption>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item v-for="item in locales" :key="item.value">
+                <CheckSquareOutlined v-show="item.value === currentLocale" />
+                {{ item.label }}
+              </a-menu-item>
+            </a-menu>
           </template>
         </a-dropdown>
       </li>
@@ -205,6 +201,8 @@
     TagOutlined,
     UserOutlined,
     LogoutOutlined,
+    MenuFoldOutlined,
+    CheckSquareOutlined,
   } from '@ant-design/icons-vue';
   import Logo from '@/assets/logo.svg';
   import { useDark, useToggle, useFullscreen } from '@vueuse/core';
