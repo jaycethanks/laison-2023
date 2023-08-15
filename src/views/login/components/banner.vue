@@ -6,7 +6,12 @@
           <div :key="item.slogan" class="carousel-item">
             <div class="carousel-title">{{ item.slogan }}</div>
             <div class="carousel-sub-title">{{ item.subSlogan }}</div>
-            <img class="carousel-image" :src="item.image" />
+            <!-- <img class="carousel-image" :src="item.image" /> -->
+            <p
+              class="carousel-image"
+              style="text-align: center; font-size: 128px"
+              >{{ item.image }}</p
+            >
           </div>
         </div>
       </a-carousel>
@@ -24,17 +29,18 @@
     {
       slogan: t('login.banner.slogan1'),
       subSlogan: t('login.banner.subSlogan1'),
-      image: bannerImage,
+      image: '🐒️',
+      // image: bannerImage,
     },
     {
       slogan: t('login.banner.slogan2'),
       subSlogan: t('login.banner.subSlogan2'),
-      image: bannerImage,
+      image: '🥳️',
     },
     {
       slogan: t('login.banner.slogan3'),
       subSlogan: t('login.banner.subSlogan3'),
-      image: bannerImage,
+      image: '🎉️',
     },
   ]);
 </script>
@@ -42,8 +48,8 @@
 <style lang="less" scoped>
   .banner {
     &-inner {
-      margin: 6rem;
-      height: 900px;
+      padding: 6rem;
+      height: 100%;
     }
   }
 
@@ -77,7 +83,7 @@
     &-image {
       width: 320px;
       // margin-top: 30px;
-      margin-bottom: 500px;
+      margin-bottom: 100px;
     }
   }
 </style>
