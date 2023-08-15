@@ -2,5 +2,8 @@
 const path = require('path');
 
 module.exports = {
-  extends:['@laison']
+  extends:['@laison'],
+  rules: {
+    "prefer-regex-literals": "off"
+  }
 };
