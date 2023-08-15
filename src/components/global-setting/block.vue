@@ -9,7 +9,7 @@
         :type="option.type || 'switch'"
         :name="option.key"
         :default-value="option.defaultVal"
-        @input-change="handleChange"
+        @inputChange="handleChange"
       />
     </div>
   </div>
