@@ -1,12 +1,12 @@
 <script lang="tsx">
-  import { defineComponent, ref, h, compile, computed } from 'vue';
+  import { compile, computed, defineComponent, h, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useRoute, useRouter, RouteRecordRaw } from 'vue-router';
-  import type { RouteMeta } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
+  import type { RouteMeta, RouteRecordRaw } from 'vue-router';
+  import useMenuTree from './use-menu-tree';
   import { useAppStore } from '@/store';
   import { listenerRouteChange } from '@/utils/route-listener';
   import { openWindow, regexUrl } from '@/utils';
-  import useMenuTree from './use-menu-tree';
 
   export default defineComponent({
     emit: ['collapse'],
@@ -73,7 +73,7 @@
         const { requiresAuth, activeMenu, hideInMenu } = newRoute.meta;
         if (requiresAuth && (!hideInMenu || activeMenu)) {
           const menuOpenKeys = findMenuOpenKeys(
-            (activeMenu || newRoute.name) as string
+            (activeMenu || newRoute.name) as string,
           );
 
           const keySet = new Set([...menuOpenKeys, ...openKeys.value]);
@@ -85,8 +85,9 @@
         }
       }, true);
       const setCollapse = (val: boolean) => {
-        if (appStore.device === 'desktop')
+        if (appStore.device === 'desktop') {
           appStore.updateSettings({ menuCollapse: val });
+        }
       };
 
       const renderSubMenu = () => {
@@ -97,8 +98,9 @@
               const icon = element?.meta?.icon
                 ? () => h(compile(`<${element?.meta?.icon}/>`))
                 : null;
-              const node =
-                element?.children && element?.children.length !== 0 ? (
+              const node
+                = element?.children && element?.children.length !== 0
+                  ? (
                   <a-sub-menu
                     key={element?.name}
                     v-slots={{
@@ -108,7 +110,8 @@
                   >
                     {travel(element?.children)}
                   </a-sub-menu>
-                ) : (
+                    )
+                  : (
                   <a-menu-item
                     key={element?.name}
                     v-slots={{ icon }}
@@ -116,7 +119,7 @@
                   >
                     {t(element?.meta?.locale || '')}
                   </a-menu-item>
-                );
+                    );
               nodes.push(node as never);
             });
           }

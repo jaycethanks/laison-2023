@@ -6,7 +6,9 @@
         src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
       /> -->
       <Logo />
-      <div class="logo-text">Laison Tech</div>
+      <div class="logo-text">
+        Laison Tech
+      </div>
     </div>
     <LoginBanner />
     <div class="content">
@@ -21,10 +23,10 @@
 </template>
 
 <script lang="ts" setup>
-  import Footer from '@/components/footer/index.vue';
-  import Logo from '@/assets/logo.svg';
-  import LoginBanner from './components/banner.vue';
-  import LoginForm from './components/login-form.vue';
+import LoginBanner from './components/banner.vue';
+import LoginForm from './components/login-form.vue';
+import Footer from '@/components/footer/index.vue';
+import Logo from '@/assets/logo.svg';
 </script>
 
 <style lang="less" scoped>

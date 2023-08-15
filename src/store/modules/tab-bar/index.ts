@@ -1,12 +1,12 @@
 import type { RouteLocationNormalized } from 'vue-router';
 import { defineStore } from 'pinia';
+import type { TabBarState, TagProps } from './types';
 import {
   DEFAULT_ROUTE,
   DEFAULT_ROUTE_NAME,
   REDIRECT_ROUTE_NAME,
 } from '@/router/constants';
 import { isString } from '@/utils/is';
-import { TabBarState, TagProps } from './types';
 
 const formatTag = (route: RouteLocationNormalized): TagProps => {
   const { name, meta, fullPath, query } = route;
@@ -59,9 +59,9 @@ const useAppStore = defineStore('tabBar', {
       this.cacheTabList.clear();
       // 要先判断ignoreCache
       this.tagList
-        .filter((el) => !el.ignoreCache)
-        .map((el) => el.name)
-        .forEach((x) => this.cacheTabList.add(x));
+        .filter(el => !el.ignoreCache)
+        .map(el => el.name)
+        .forEach(x => this.cacheTabList.add(x));
     },
     resetTabList() {
       this.tagList = [DEFAULT_ROUTE];

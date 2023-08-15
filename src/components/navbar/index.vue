@@ -29,7 +29,7 @@
           <a-button
             class="nav-btn"
             type="outline"
-            :shape="'circle'"
+            shape="circle"
             :icon="h(SearchOutlined)"
           >
             <template #icon>
@@ -43,13 +43,13 @@
           <a-button
             class="nav-btn"
             type="outline"
-            :shape="'circle'"
+            shape="circle"
             :icon="h(GlobalOutlined)"
             @click="setDropDownVisible"
-          ></a-button>
+          />
         </a-tooltip>
         <a-dropdown trigger="click" @select="changeLocale as any">
-          <div ref="triggerBtn" class="trigger-btn"></div>
+          <div ref="triggerBtn" class="trigger-btn" />
           <template #overlay>
             <a-menu>
               <a-menu-item v-for="item in locales" :key="item.value">
@@ -71,7 +71,7 @@
           <a-button
             class="nav-btn"
             type="outline"
-            :shape="'circle'"
+            shape="circle"
             @click="handleToggleTheme"
           >
             <template #icon>
@@ -88,11 +88,10 @@
               <a-button
                 class="nav-btn"
                 type="outline"
-                :shape="'circle'"
+                shape="circle"
                 :icon="h(BellOutlined)"
                 @click="setPopoverVisible"
-              >
-              </a-button>
+              />
             </a-badge>
           </div>
         </a-tooltip>
@@ -102,9 +101,9 @@
           :content-style="{ padding: 0, minWidth: '400px' }"
           content-class="message-popover"
         >
-          <div ref="refBtn" class="ref-btn"></div>
+          <div ref="refBtn" class="ref-btn" />
           <template #content>
-            <message-box />
+            <MessageBox />
           </template>
         </a-popover>
       </li>
@@ -119,11 +118,10 @@
           <a-button
             class="nav-btn"
             type="outline"
-            :shape="'circle'"
+            shape="circle"
             :icon="isFullscreen ? h(CompressOutlined) : h(ExpandOutlined)"
             @click="toggleFullScreen"
-          >
-          </a-button>
+          />
         </a-tooltip>
       </li>
       <li>
@@ -131,11 +129,10 @@
           <a-button
             class="nav-btn"
             type="outline"
-            :shape="'circle'"
+            shape="circle"
             :icon="h(SettingOutlined)"
             @click="setVisible"
-          >
-          </a-button>
+          />
         </a-tooltip>
       </li>
       <li>
@@ -144,7 +141,7 @@
             :size="32"
             :style="{ marginRight: '8px', cursor: 'pointer' }"
           >
-            <img alt="avatar" :src="avatar" />
+            <img alt="avatar" :src="avatar">
           </a-avatar>
           <template #overlay>
             <a-menu>
@@ -189,89 +186,89 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, inject, h } from 'vue';
-  import { message as Message } from 'ant-design-vue';
-  import {
-    SearchOutlined,
-    GlobalOutlined,
-    BellOutlined,
-    ExpandOutlined,
-    CompressOutlined,
-    SettingOutlined,
-    TagOutlined,
-    UserOutlined,
-    LogoutOutlined,
-    MenuFoldOutlined,
-    CheckSquareOutlined,
-  } from '@ant-design/icons-vue';
-  import Logo from '@/assets/logo.svg';
-  import { useDark, useToggle, useFullscreen } from '@vueuse/core';
-  import { useAppStore, useUserStore } from '@/store';
-  import { LOCALE_OPTIONS } from '@/locale';
-  import useLocale from '@/hooks/locale';
-  import useUser from '@/hooks/user';
-  import Menu from '@/components/menu/index.vue';
-  import IconMoonOutlined from '@/assets/svgIcons/icon-moon-outlined.vue';
-  import IconSunOutlined from '@/assets/svgIcons/icon-sun-outlined.vue';
-  import MessageBox from '../message-box/index.vue';
+import { computed, h, inject, ref } from 'vue';
+import { message as Message } from 'ant-design-vue';
+import {
+  BellOutlined,
+  CheckSquareOutlined,
+  CompressOutlined,
+  ExpandOutlined,
+  GlobalOutlined,
+  LogoutOutlined,
+  MenuFoldOutlined,
+  SearchOutlined,
+  SettingOutlined,
+  TagOutlined,
+  UserOutlined,
+} from '@ant-design/icons-vue';
+import { useDark, useFullscreen, useToggle } from '@vueuse/core';
+import MessageBox from '../message-box/index.vue';
+import Logo from '@/assets/logo.svg';
+import { useAppStore, useUserStore } from '@/store';
+import { LOCALE_OPTIONS } from '@/locale';
+import useLocale from '@/hooks/locale';
+import useUser from '@/hooks/user';
+import Menu from '@/components/menu/index.vue';
+import IconMoonOutlined from '@/assets/svgIcons/icon-moon-outlined.vue';
+import IconSunOutlined from '@/assets/svgIcons/icon-sun-outlined.vue';
 
-  const appStore = useAppStore();
-  const userStore = useUserStore();
-  const { logout } = useUser();
-  const { changeLocale, currentLocale } = useLocale();
-  const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
-  const locales = [...LOCALE_OPTIONS];
-  const avatar = computed(() => {
-    return userStore.avatar;
+const appStore = useAppStore();
+const userStore = useUserStore();
+const { logout } = useUser();
+const { changeLocale, currentLocale } = useLocale();
+const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
+const locales = [...LOCALE_OPTIONS];
+const avatar = computed(() => {
+  return userStore.avatar;
+});
+const theme = computed(() => {
+  return appStore.theme;
+});
+const topMenu = computed(() => appStore.topMenu && appStore.menu);
+const isDark = useDark({
+  selector: 'body',
+  attribute: 'arco-theme',
+  valueDark: 'dark',
+  valueLight: 'light',
+  storageKey: 'arco-theme',
+  onChanged(dark: boolean) {
+    // overridden default behavior
+    appStore.toggleTheme(dark);
+  },
+});
+const toggleTheme = useToggle(isDark);
+const handleToggleTheme = () => {
+  toggleTheme();
+};
+const setVisible = () => {
+  appStore.updateSettings({ globalSettings: true });
+};
+const refBtn = ref();
+const triggerBtn = ref();
+const setPopoverVisible = () => {
+  const event = new MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true,
   });
-  const theme = computed(() => {
-    return appStore.theme;
+  refBtn.value.dispatchEvent(event);
+};
+const handleLogout = () => {
+  logout();
+};
+const setDropDownVisible = () => {
+  const event = new MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true,
   });
-  const topMenu = computed(() => appStore.topMenu && appStore.menu);
-  const isDark = useDark({
-    selector: 'body',
-    attribute: 'arco-theme',
-    valueDark: 'dark',
-    valueLight: 'light',
-    storageKey: 'arco-theme',
-    onChanged(dark: boolean) {
-      // overridden default behavior
-      appStore.toggleTheme(dark);
-    },
-  });
-  const toggleTheme = useToggle(isDark);
-  const handleToggleTheme = () => {
-    toggleTheme();
-  };
-  const setVisible = () => {
-    appStore.updateSettings({ globalSettings: true });
-  };
-  const refBtn = ref();
-  const triggerBtn = ref();
-  const setPopoverVisible = () => {
-    const event = new MouseEvent('click', {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-    });
-    refBtn.value.dispatchEvent(event);
-  };
-  const handleLogout = () => {
-    logout();
-  };
-  const setDropDownVisible = () => {
-    const event = new MouseEvent('click', {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-    });
-    triggerBtn.value.dispatchEvent(event);
-  };
-  const switchRoles = async () => {
-    const res = await userStore.switchRoles();
-    Message.success(res as string);
-  };
-  const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
+  triggerBtn.value.dispatchEvent(event);
+};
+const switchRoles = async () => {
+  const res = await userStore.switchRoles();
+  Message.success(res as string);
+};
+const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
 </script>
 
 <style scoped lang="less">

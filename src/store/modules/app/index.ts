@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
 import { notification as Notification } from 'ant-design-vue';
 import type { RouteRecordNormalized } from 'vue-router';
+import type { AppState } from './types';
 import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
-import { AppState } from './types';
 
 const useAppStore = defineStore('app', {
   state: (): AppState => ({ ...defaultSettings }),
@@ -23,7 +23,7 @@ const useAppStore = defineStore('app', {
   actions: {
     // Update app settings
     updateSettings(partial: Partial<AppState>) {
-      // @ts-ignore-next-line
+      // @ts-expect-error-next-line
       this.$patch(partial);
     },
 
@@ -32,7 +32,8 @@ const useAppStore = defineStore('app', {
       if (dark) {
         this.theme = 'dark';
         document.body.setAttribute('arco-theme', 'dark');
-      } else {
+      }
+      else {
         this.theme = 'light';
         document.body.removeAttribute('arco-theme');
       }
@@ -57,8 +58,8 @@ const useAppStore = defineStore('app', {
           description: 'success',
           message: 'success',
         });
-      } catch (error) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      }
+      catch (error) {
         Notification.error({
           key: 'menuNotice',
           description: 'error',

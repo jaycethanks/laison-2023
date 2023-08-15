@@ -5,10 +5,10 @@ import { useUserStore } from '@/store';
 import { getToken } from '@/utils/auth';
 
 export interface HttpResponse<T = unknown> {
-  status: number;
-  msg: string;
-  code: number;
-  data: T;
+  status: number
+  msg: string
+  code: number
+  data: T
 }
 
 if (import.meta.env.VITE_API_BASE_URL) {
@@ -33,7 +33,7 @@ axios.interceptors.request.use(
   (error) => {
     // do something
     return Promise.reject(error);
-  }
+  },
 );
 // add response interceptors
 axios.interceptors.response.use(
@@ -47,8 +47,8 @@ axios.interceptors.response.use(
       });
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (
-        [50008, 50012, 50014].includes(res.code) &&
-        response.config.url !== '/api/user/info'
+        [50008, 50012, 50014].includes(res.code)
+        && response.config.url !== '/api/user/info'
       ) {
         Modal.error({
           title: 'Confirm logout',
@@ -73,5 +73,5 @@ axios.interceptors.response.use(
       duration: 5 * 1000,
     });
     return Promise.reject(error);
-  }
+  },
 );

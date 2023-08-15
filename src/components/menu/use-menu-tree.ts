@@ -1,9 +1,9 @@
 import { computed } from 'vue';
-import { RouteRecordRaw, RouteRecordNormalized } from 'vue-router';
+import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router';
+import { cloneDeep } from 'lodash';
 import usePermission from '@/hooks/permission';
 import { useAppStore } from '@/store';
 import appClientMenus from '@/router/app-menus';
-import { cloneDeep } from 'lodash';
 
 export default function useMenuTree() {
   const permission = usePermission();
@@ -36,7 +36,7 @@ export default function useMenuTree() {
 
         // route filter hideInMenu true
         element.children = element.children.filter(
-          (x) => x.meta?.hideInMenu !== true
+          x => x.meta?.hideInMenu !== true,
         );
 
         // Associated child node

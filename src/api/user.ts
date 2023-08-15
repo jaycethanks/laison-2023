@@ -1,14 +1,14 @@
 import axios from 'axios';
 import type { RouteRecordNormalized } from 'vue-router';
-import { UserState } from '@/store/modules/user/types';
+import type { UserState } from '@/store/modules/user/types';
 
 export interface LoginData {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
 
 export interface LoginRes {
-  token: string;
+  token: string
 }
 export function login(data: LoginData) {
   return axios.post<LoginRes>('/api/user/login', data);

@@ -4,14 +4,19 @@
       <a-carousel autoplay class="carousel" effect="fade">
         <div v-for="item in carouselItem" :key="item.slogan">
           <div :key="item.slogan" class="carousel-item">
-            <div class="carousel-title">{{ item.slogan }}</div>
-            <div class="carousel-sub-title">{{ item.subSlogan }}</div>
+            <div class="carousel-title">
+              {{ item.slogan }}
+            </div>
+            <div class="carousel-sub-title">
+              {{ item.subSlogan }}
+            </div>
             <!-- <img class="carousel-image" :src="item.image" /> -->
             <p
               class="carousel-image"
               style="text-align: center; font-size: 128px"
-              >{{ item.image }}</p
             >
+              {{ item.image }}
+            </p>
           </div>
         </div>
       </a-carousel>
@@ -20,29 +25,28 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { useI18n } from 'vue-i18n';
-  import bannerImage from '@/assets/images/login-banner.png';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-  const { t } = useI18n();
-  const carouselItem = computed(() => [
-    {
-      slogan: t('login.banner.slogan1'),
-      subSlogan: t('login.banner.subSlogan1'),
-      image: '🐒️',
-      // image: bannerImage,
-    },
-    {
-      slogan: t('login.banner.slogan2'),
-      subSlogan: t('login.banner.subSlogan2'),
-      image: '🥳️',
-    },
-    {
-      slogan: t('login.banner.slogan3'),
-      subSlogan: t('login.banner.subSlogan3'),
-      image: '🎉️',
-    },
-  ]);
+const { t } = useI18n();
+const carouselItem = computed(() => [
+  {
+    slogan: t('login.banner.slogan1'),
+    subSlogan: t('login.banner.subSlogan1'),
+    image: '🐒️',
+    // image: bannerImage,
+  },
+  {
+    slogan: t('login.banner.slogan2'),
+    subSlogan: t('login.banner.subSlogan2'),
+    image: '🥳️',
+  },
+  {
+    slogan: t('login.banner.slogan3'),
+    subSlogan: t('login.banner.subSlogan3'),
+    image: '🎉️',
+  },
+]);
 </script>
 
 <style lang="less" scoped>
