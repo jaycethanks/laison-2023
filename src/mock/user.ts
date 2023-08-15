@@ -86,6 +86,7 @@ setupMock({
               meta: {
                 locale: 'menu.server.workplace',
                 requiresAuth: true,
+                icon: 'heat-map-outlined',
               },
             },
             {
@@ -94,6 +95,7 @@ setupMock({
               meta: {
                 locale: 'menu.arcoWebsite',
                 requiresAuth: true,
+                icon: 'radar-chart-outlined',
               },
             },
           ],

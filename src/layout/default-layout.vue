@@ -8,10 +8,12 @@
         <LayoutSider
           v-if="renderMenu"
           v-show="!hideMenu"
+          :theme="isDark ? 'dark' : 'light'"
           class="layout-sider"
           breakpoint="xl"
           :collapsed="collapsed"
           :collapsible="true"
+          :collapsed-width="48"
           :width="menuWidth"
           :style="{ paddingTop: navbar ? '60px' : '' }"
           :hide-trigger="true"
@@ -56,7 +58,9 @@ import Footer from '@/components/footer/index.vue';
 import TabBar from '@/components/tab-bar/index.vue';
 import usePermission from '@/hooks/permission';
 import useResponsive from '@/hooks/responsive';
+import useThemes from '@/hooks/themes';
 
+const { isDark } = useThemes();
 const isInit = ref(false);
 const appStore = useAppStore();
 const userStore = useUserStore();

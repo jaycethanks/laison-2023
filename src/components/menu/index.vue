@@ -7,6 +7,7 @@
   import { useAppStore } from '@/store';
   import { listenerRouteChange } from '@/utils/route-listener';
   import { openWindow, regexUrl } from '@/utils';
+  import useThemes from '@/hooks/themes';
 
   export default defineComponent({
     emit: ['collapse'],
@@ -29,6 +30,7 @@
       const topMenu = computed(() => appStore.topMenu);
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
+      const { isDark } = useThemes();
 
       const goto = (item: RouteRecordRaw) => {
         // Open external link
@@ -130,9 +132,10 @@
 
       return () => (
         <a-menu
-          mode={topMenu.value ? 'horizontal' : 'vertical'}
+          theme={isDark.value ? 'dark' : 'light'}
+          mode={topMenu.value ? 'vertical' : 'inline'}
           v-model:collapsed={collapsed.value}
-          v-model:open-keys={openKeys.value}
+          v-model:selectedKeys={openKeys.value}
           show-collapse-button={appStore.device !== 'mobile'}
           auto-open={false}
           selected-keys={selectedKey.value}
