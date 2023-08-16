@@ -7,6 +7,7 @@ import { createApp } from 'vue';
 // 样式通过 arco-plugin 插件导入。详见目录文件 config/plugin/arcoStyleImport.ts
 // https://arco.design/docs/designlab/use-theme-package
 import Antdv from 'ant-design-vue';
+import AntdvIconSet from './lib/antdIcons';
 import 'ant-design-vue/dist/reset.css';
 
 import App from './App.vue';
@@ -15,7 +16,6 @@ import store from './store';
 import i18n from './locale';
 import directive from './directive';
 import globalComponents from '@/components';
-import AntdvIconSet from '@/lib/antdIcons';
 import './mock';
 
 import '@/assets/style/global.less';

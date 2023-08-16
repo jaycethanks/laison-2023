@@ -1,6 +1,6 @@
 <template>
   <a-layout-footer class="footer">
-    Arco Pro
+    a blank footer
   </a-layout-footer>
 </template>
 

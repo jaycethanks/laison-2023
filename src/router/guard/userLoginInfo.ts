@@ -10,6 +10,7 @@ export default function setupUserLoginInfoGuard(router: Router) {
     NProgress.start();
     const userStore = useUserStore();
     if (isLogin()) {
+      // role 为空 全部放行
       if (userStore.role) {
         next();
       }

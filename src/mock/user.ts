@@ -101,6 +101,26 @@ setupMock({
             },
           ],
         },
+        {
+          path: '/demo',
+          name: 'demo',
+          meta: {
+            locale: 'demo',
+            requiresAuth: true,
+            icon: 'radar-chart-outlined',
+          },
+          children: [
+            {
+              path: 'workplace',
+              name: 'Workplace',
+              meta: {
+                locale: 'menu.server.workplace',
+                requiresAuth: true,
+                icon: 'heat-map-outlined',
+              },
+            },
+          ],
+        },
       ];
       return successResponseWrap(menuList);
     });
