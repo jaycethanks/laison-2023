@@ -95,6 +95,7 @@ setupMock({
               meta: {
                 locale: 'menu.arcoWebsite',
                 requiresAuth: true,
+                external: true,
                 icon: 'radar-chart-outlined',
                 isIframe: true,
               },
@@ -111,7 +112,7 @@ setupMock({
           },
           children: [
             {
-              path: 'workplace',
+              path: 'https://juejin.cn/pins',
               name: 'Workplace',
               meta: {
                 locale: 'menu.server.workplace',

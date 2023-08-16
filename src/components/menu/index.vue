@@ -34,7 +34,7 @@
 
       const goto = (item: RouteRecordRaw) => {
         // Open external link
-        if (regexUrl.test(item.path)) {
+        if (regexUrl.test(item.path) && item.meta?.external) {
           openWindow(item.path);
           selectedKey.value = [item.name as string];
           return;
