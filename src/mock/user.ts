@@ -119,12 +119,21 @@ setupMock({
                 requiresAuth: true,
                 icon: 'heat-map-outlined',
               },
+            },
+            {
+              path: 'https://juejin.cn/pins',
+              name: 'demo-2',
+              meta: {
+                locale: 'demo-2',
+                requiresAuth: true,
+                icon: 'heat-map-outlined',
+              },
               children: [
                 {
                   path: 'https://juejin.cn/pins',
-                  name: 'demo-1-1',
+                  name: 'demo-2-1',
                   meta: {
-                    locale: 'demo-1-1',
+                    locale: 'demo-2-1',
                     requiresAuth: true,
                     icon: 'heat-map-outlined',
                   },
