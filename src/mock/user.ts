@@ -113,12 +113,23 @@ setupMock({
           children: [
             {
               path: 'https://juejin.cn/pins',
-              name: 'Workplace',
+              name: 'demo-1',
               meta: {
-                locale: 'menu.server.workplace',
+                locale: 'demo-1',
                 requiresAuth: true,
                 icon: 'heat-map-outlined',
               },
+              children: [
+                {
+                  path: 'https://juejin.cn/pins',
+                  name: 'demo-1-1',
+                  meta: {
+                    locale: 'demo-1-1',
+                    requiresAuth: true,
+                    icon: 'heat-map-outlined',
+                  },
+                },
+              ],
             },
           ],
         },

@@ -9,14 +9,3 @@ declare module '*.vue' {
 interface ImportMetaEnv {
   readonly VITE_API_BASE_URL: string;
 }
-
-
-// https://router.vuejs.org/zh/guide/advanced/meta.html#TypeScript
-
-import 'vue-router'
-declare module 'vue-router' {
-  interface RouteMeta {
-    // 是否为外部链接 (要不要使用 window.open 打开这个链接 ？)
-    external?: boolean
-  }
-}
