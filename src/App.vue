@@ -1,5 +1,12 @@
 <template>
-  <a-config-provider :locale="locale">
+  <a-config-provider
+    :locale="locale"
+    :theme="{
+      token: {
+        colorPrimary: '#FA541C',
+      },
+    }"
+  >
     <router-view />
     <GlobalSetting />
   </a-config-provider>

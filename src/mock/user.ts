@@ -96,6 +96,7 @@ setupMock({
                 locale: 'menu.arcoWebsite',
                 requiresAuth: true,
                 icon: 'radar-chart-outlined',
+                isIframe: true,
               },
             },
           ],

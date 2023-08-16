@@ -132,7 +132,7 @@
 
       return () => (
         <a-menu
-          theme={isDark.value ? 'dark' : 'light'}
+          theme={ isDark.value ? 'dark' : 'light' }
           mode={topMenu.value ? 'vertical' : 'inline'}
           v-model:collapsed={collapsed.value}
           v-model:selectedKeys={openKeys.value}
