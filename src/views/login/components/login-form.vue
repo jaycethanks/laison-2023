@@ -13,7 +13,7 @@
       :model="userInfo"
       class="login-form"
       layout="vertical"
-      @finish="handleSubmit"
+      @finish="onFinished"
       @finishFailed="onFinishFailed"
     >
       <a-form-item
@@ -21,10 +21,9 @@
         name="username"
         :rules="[{ required: true, message: $t('login.form.userName.errMsg') }]"
         :validate-trigger="['change', 'blur']"
-        hide-label
       >
         <a-input
-          v-model="userInfo.username"
+          v-model:value="userInfo.username"
           :placeholder="$t('login.form.userName.placeholder')"
         >
           <template #prefix>
@@ -37,10 +36,9 @@
         name="password"
         :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
         :validate-trigger="['change', 'blur']"
-        hide-label
       >
         <a-input-password
-          v-model="userInfo.password"
+          v-model:value="userInfo.password"
           :placeholder="$t('login.form.password.placeholder')"
           allow-clear
         >
@@ -57,7 +55,7 @@
           >
             {{ $t('login.form.rememberPassword') }}
           </a-checkbox>
-          <a>{{ $t('login.form.forgetPassword') }}</a>
+          <!-- <a>{{ $t('login.form.forgetPassword') }}</a> -->
         </div>
         <a-button
           type="primary"
@@ -67,9 +65,9 @@
         >
           {{ $t('login.form.login') }}
         </a-button>
-        <a-button type="text" long class="login-form-register-btn">
+        <!-- <a-button type="text" long class="login-form-register-btn">
           {{ $t('login.form.register') }}
-        </a-button>
+        </a-button> -->
       </a-space>
     </a-form>
   </div>
@@ -100,13 +98,15 @@ const loginConfig = useStorage('login-config', {
   username: 'admin', // 演示默认值
   password: 'admin', // demo default value
 });
+
+const { rememberPassword } = loginConfig.value;
+
 const userInfo = reactive({
-  username: loginConfig.value.username,
-  password: loginConfig.value.password,
+  username: rememberPassword ? loginConfig.value.username : undefined,
+  password: rememberPassword ? loginConfig.value.password : undefined,
 });
 
-const handleSubmit = async (values: any) => {
-  console.log('[values]: ', values);
+const onFinished = async (values: any) => {
   if (loading.value) return;
   const errors = false;
   if (!errors) {
