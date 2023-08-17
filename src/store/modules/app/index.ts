@@ -55,7 +55,7 @@ const useAppStore = defineStore('app', {
         const { data } = await getMenuList();
         this.serverMenu = data;
 
-        // 解析服务端返回的路由表，生成动态路由
+        // @jayce 解析服务端返回的路由表，生成动态路由
         patchingDynamicRoutes(data);
 
         Notification.success({
