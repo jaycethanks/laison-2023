@@ -1,12 +1,12 @@
 import type { RouteMeta, RouteRecordNormalized } from 'vue-router';
 import { cloneDeep } from 'lodash';
 import walk from './traverse';
+import generateIframePage from './generateIframePage';
 import { appRoutes } from '@/router/routes';
 import { DEFAULT_LAYOUT } from '@/router/routes/base';
 import type { AppRouteRecordRaw } from '@/router/routes/types';
 import router from '@/router';
 import { regexUrl } from '@/utils';
-import IframePage from '@/components/IframePage/index.vue';
 
 const filterNotExistRoutes = (localRoutes: RouteRecordNormalized[], serveMenuList: RouteRecordNormalized[]) => {
   const localRoutesPath = localRoutes.map(it => it.path);
@@ -26,7 +26,9 @@ const patchingDynamicRoutes = (serveMenuList: RouteRecordNormalized[]) => {
   walk<RouteRecordNormalized>((item, _index, _arr) => {
     const { children, meta, name, path } = item;
     const record: AppRouteRecordRaw = {
-      component: children ? DEFAULT_LAYOUT : IframePage,
+      component: children
+        ? DEFAULT_LAYOUT
+        : generateIframePage('hehehe'),
       path: isIframeLink(path, meta) ? (name || 'noname') as any : path,
       meta: { ...meta, _path: path },
       name,
