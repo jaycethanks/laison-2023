@@ -4,6 +4,7 @@ import type { RouteRecordNormalized } from 'vue-router';
 import type { AppState } from './types';
 import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
+import patchingDynamicRoutes from '@/utils/patchingDynamicRoutes';
 
 const useAppStore = defineStore('app', {
   state: (): AppState => ({ ...defaultSettings }),
@@ -53,6 +54,10 @@ const useAppStore = defineStore('app', {
         });
         const { data } = await getMenuList();
         this.serverMenu = data;
+
+        // 解析服务端返回的路由表，生成动态路由
+        patchingDynamicRoutes(data);
+
         Notification.success({
           key: 'menuNotice',
           description: 'success',

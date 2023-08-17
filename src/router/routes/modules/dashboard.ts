@@ -11,6 +11,7 @@ const DASHBOARD: AppRouteRecordRaw = {
     requiresAuth: true,
     icon: 'dashboard-outlined',
     order: 0,
+
   },
   children: [
     {

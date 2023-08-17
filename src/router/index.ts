@@ -7,7 +7,6 @@ import { appRoutes } from './routes';
 import { NOT_FOUND_ROUTE, REDIRECT_MAIN } from './routes/base';
 import createRouteGuard from './guard';
 
-console.log('[appRoutes]: ', appRoutes);
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
 const router = createRouter({

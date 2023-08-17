@@ -106,7 +106,7 @@ setupMock({
           path: '/demo',
           name: 'demo',
           meta: {
-            locale: 'demo',
+            locale: 'menu.demo',
             requiresAuth: true,
             icon: 'radar-chart-outlined',
           },
@@ -115,7 +115,7 @@ setupMock({
               path: 'https://juejin.cn/pins',
               name: 'demo-1',
               meta: {
-                locale: 'demo-1',
+                locale: 'menu.demo-1',
                 requiresAuth: true,
                 icon: 'heat-map-outlined',
               },
@@ -124,16 +124,16 @@ setupMock({
               path: 'https://juejin.cn/pins',
               name: 'demo-2',
               meta: {
-                locale: 'demo-2',
+                locale: 'menu.demo-2',
                 requiresAuth: true,
                 icon: 'heat-map-outlined',
               },
               children: [
                 {
-                  path: 'https://juejin.cn/pins',
+                  path: 'https://www.cnblogs.com/jaycethanks/',
                   name: 'demo-2-1',
                   meta: {
-                    locale: 'demo-2-1',
+                    locale: 'menu.demo-2-1',
                     requiresAuth: true,
                     icon: 'heat-map-outlined',
                   },
