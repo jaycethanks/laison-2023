@@ -1,12 +1,20 @@
 import { defineComponent } from 'vue';
+import { useI18n } from 'vue-i18n';
+import type { RouteMeta } from 'vue-router';
 
-const generateIframePage = (props: any) => {
+interface RouteMetaExt extends RouteMeta {
+  _path?: string
+}
+
+const generateIframePage = (_meta: RouteMetaExt) => {
+  const { _path, locale, icon } = _meta;
   return defineComponent({
-    render() {
-      return (
+    setup() {
+      const { t } = useI18n();
+      return () => (
         <div>
-          <h1>Hello My friend</h1>
-          <h2>{props}</h2>
+          {/* <h1>{t(locale || '')}</h1> */}
+          <iframe style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>
         </div>
       );
     },

@@ -130,7 +130,7 @@ setupMock({
               },
               children: [
                 {
-                  path: 'https://www.cnblogs.com/jaycethanks/',
+                  path: 'http://dict.cn/',
                   name: 'demo-2-1',
                   meta: {
                     locale: 'menu.demo-2-1',
