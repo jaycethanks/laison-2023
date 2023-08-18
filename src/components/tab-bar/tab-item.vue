@@ -1,6 +1,6 @@
 <template>
   <a-dropdown
-    trigger="contextMenu"
+    :trigger="['contextmenu']"
     :popup-max-height="false"
     @select="actionSelect"
   >
@@ -16,42 +16,56 @@
         class="arco-icon-hover arco-tag-icon-hover arco-icon-hover-size-medium arco-tag-close-btn"
         @click.stop="tagClose(itemData, index)"
       >
-        <icon-close />
+        <CloseOutlined />
       </span>
     </span>
-    <template #content>
-      <a-doption :disabled="disabledReload" :value="Eaction.reload">
-        <icon-refresh />
-        <span>重新加载</span>
-      </a-doption>
-      <a-doption
-        class="sperate-line"
-        :disabled="disabledCurrent"
-        :value="Eaction.current"
-      >
-        <icon-close />
-        <span>关闭当前标签页</span>
-      </a-doption>
-      <a-doption :disabled="disabledLeft" :value="Eaction.left">
-        <icon-to-left />
-        <span>关闭左侧标签页</span>
-      </a-doption>
-      <a-doption
-        class="sperate-line"
-        :disabled="disabledRight"
-        :value="Eaction.right"
-      >
-        <icon-to-right />
-        <span>关闭右侧标签页</span>
-      </a-doption>
-      <a-doption :value="Eaction.others">
-        <icon-swap />
-        <span>关闭其它标签页</span>
-      </a-doption>
-      <a-doption :value="Eaction.all">
-        <icon-folder-delete />
-        <span>关闭全部标签页</span>
-      </a-doption>
+    <template #overlay>
+      <a-menu>
+        <a-menu-item :disabled="disabledReload" :value="Eaction.reload">
+          <a-space>
+            <ReloadOutlined />
+            <span>重新加载</span>
+          </a-space>
+        </a-menu-item>
+        <a-menu-item
+          class="sperate-line"
+          :disabled="disabledCurrent"
+          :value="Eaction.current"
+        >
+          <a-space>
+            <CloseOutlined />
+            <span>关闭当前标签页</span>
+          </a-space>
+        </a-menu-item>
+        <a-menu-item :disabled="disabledLeft" :value="Eaction.left">
+          <a-space>
+            <VerticalRightOutlined />
+            <span>关闭左侧标签页</span>
+          </a-space>
+        </a-menu-item>
+        <a-menu-item
+          class="sperate-line"
+          :disabled="disabledRight"
+          :value="Eaction.right"
+        >
+          <a-space>
+            <VerticalLeftOutlined />
+            <span>关闭右侧标签页</span>
+          </a-space>
+        </a-menu-item>
+        <a-menu-item :value="Eaction.others">
+          <a-space>
+            <SwapOutlined />
+            <span>关闭其它标签页</span>
+          </a-space>
+        </a-menu-item>
+        <a-menu-item :value="Eaction.all">
+          <a-space>
+            <UngroupOutlined />
+            <span>关闭全部标签页</span>
+          </a-space>
+        </a-menu-item>
+      </a-menu>
     </template>
   </a-dropdown>
 </template>
