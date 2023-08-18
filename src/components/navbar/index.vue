@@ -51,7 +51,9 @@
           </template>
         </a-dropdown>
       </a-menu-item>
-      <a-menu-item style="display:flex;justify-content: center;align-items: center;">
+      <a-menu-item
+        style="display: flex; justify-content: center; align-items: center"
+      >
         <a-tooltip
           :title="
             theme === 'light'
@@ -62,7 +64,7 @@
           <a-button
             class="nav-btn"
             type="outline"
-            style="display:flex;justify-content: center;align-items: center;"
+            style="display: flex; justify-content: center; align-items: center"
             @click="handleToggleTheme"
           >
             <template #icon>
@@ -297,54 +299,19 @@ const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
     padding-left: 20px;
   }
 
-  // .center-side {
-  //   flex: 1;
-  // }
-
-  // .right-side {
-  //   display: flex;
-  //   padding-right: 20px;
-  //   list-style: none;
-  //   :deep(.locale-select) {
-  //     border-radius: 20px;
-  //   }
-  //   li {
-  //     display: flex;
-  //     align-items: center;
-  //     padding: 0 10px;
-  //   }
-
-  //   a {
-  //     color: var(--color-text-1);
-  //     text-decoration: none;
-  //   }
   .nav-btn {
     &:hover {
       background-color: #b8b8b869;
     }
     font-size: 16px;
   }
-  //   .trigger-btn,
-  //   .ref-btn {
-  //     position: absolute;
-  //     bottom: 14px;
-  //   }
-  //   .trigger-btn {
-  //     margin-left: 14px;
-  //   }
-  // }
-</style>
-
-<style lang="less">
-  .message-popover {
-    .arco-popover-content {
-      // margin-top: 0;
-    }
-  }
 </style>
 
 <style scoped lang="less">
-  :deep(.ant-menu-horizontal) > .ant-menu-item::after {
-    display: none !important;
+  :deep(.ant-menu-horizontal) {
+    border: none;
+    .ant-menu-item::after {
+      display: none !important;
+    }
   }
 </style>
