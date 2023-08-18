@@ -5,6 +5,7 @@
       <LayoutSider
         v-if="renderMenu"
         v-show="!hideMenu"
+        :trigger="null"
         class="layout-sider"
         breakpoint="xl"
         :collapsed="collapsed"
@@ -16,6 +17,14 @@
         @collapse="setCollapsed"
       >
         <Menu />
+        <div class="trigger-wrapper">
+          <a-button v-if="collapsed" size="small" @click="setCollapsed(false)">
+            <menu-unfold-outlined />
+          </a-button>
+          <a-button v-else size="small" @click="setCollapsed(true)">
+            <menu-fold-outlined />
+          </a-button>
+        </div>
       </LayoutSider>
       <a-drawer
         v-if="hideMenu"
@@ -63,7 +72,6 @@ useResponsive(true);
 const navbarHeight = '60px';
 
 const { isDark } = useThemes();
-const { token } = antdTheme.useToken();
 const navbar = computed(() => appStore.navbar);
 const renderMenu = computed(() => appStore.menu && !appStore.topMenu);
 const hideMenu = computed(() => appStore.hideMenu);
@@ -74,7 +82,7 @@ const menuWidth = computed(() => {
 const collapsed = computed(() => {
   return appStore.menuCollapse;
 });
-
+const { token } = antdTheme.useToken();
 const layoutSiderStyles = computed(() => {
   const colors = { backgroundColor: token.value.colorBgContainer };
   const layout = { paddingTop: navbar.value ? '60px' : '' };
@@ -122,16 +130,8 @@ onMounted(() => {
   .layout {
     width: 100%;
     height: 100%;
-  }
 
-  // .layout-navbar {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   z-index: 100;
-  //   width: 100%;
-  //   height: @nav-size-height;
-  // }
+  }
 
   .layout-sider {
     position: fixed;
@@ -154,30 +154,15 @@ onMounted(() => {
     > :deep(.arco-layout-sider-children) {
       overflow-y: hidden;
     }
+
+    .trigger-wrapper {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding: .6em;
+    }
+
   }
-
-  // .menu-wrapper {
-  //   height: 100%;
-  //   overflow: auto;
-  //   overflow-x: hidden;
-  //   :deep(.arco-menu) {
-  //     ::-webkit-scrollbar {
-  //       width: 12px;
-  //       height: 4px;
-  //     }
-
-  //     ::-webkit-scrollbar-thumb {
-  //       border: 4px solid transparent;
-  //       background-clip: padding-box;
-  //       border-radius: 7px;
-  //       background-color: var(--color-text-4);
-  //     }
-
-  //     ::-webkit-scrollbar-thumb:hover {
-  //       background-color: var(--color-text-3);
-  //     }
-  //   }
-  // }
 
   .layout-content {
     min-height: 100vh;

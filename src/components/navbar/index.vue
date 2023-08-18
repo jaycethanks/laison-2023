@@ -221,7 +221,8 @@ const theme = computed(() => {
 });
 const layoutHeaderStyles = computed(() => {
   const { token } = antTheme.useToken();
-  const colors = { backgroundColor: token.value.colorBgLayout };
+  const { colorBgContainer, colorBorder } = token.value;
+  const colors = { backgroundColor: colorBgContainer, borderBottom: `1px solid ${colorBorder}` };
   const layout = {
     position: 'fixed',
     zIndex: 100,
@@ -234,7 +235,7 @@ const layoutHeaderStyles = computed(() => {
 });
 const menuStyles = computed(() => {
   const { token } = antTheme.useToken();
-  return { backgroundColor: token.value.colorBgLayout };
+  return { backgroundColor: token.value.colorBgContainer };
 });
 const topMenu = computed(() => appStore.topMenu && appStore.menu);
 const isDark = useDark({

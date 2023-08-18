@@ -1,7 +1,7 @@
 <template>
   <div class="tab-bar-container">
     <a-affix ref="affixRef" :offset-top="offsetTop">
-      <div class="tab-bar-box">
+      <div class="tab-bar-box" :style="{ backgroundColor: token.colorBgContainer, borderBottom: `1px solid ${token.colorBorder}` }">
         <div class="tab-bar-scroll">
           <div class="tags-wrap">
             <tab-item
@@ -21,6 +21,7 @@
 <script lang="ts" setup>
 import { computed, onUnmounted, ref, watch } from 'vue';
 import type { RouteLocationNormalized } from 'vue-router';
+import { theme as antdTheme } from 'ant-design-vue';
 import tabItem from './tab-item.vue';
 import {
   listenerRouteChange,
@@ -28,6 +29,7 @@ import {
 } from '@/utils/route-listener';
 import { useAppStore, useTabBarStore } from '@/store';
 
+const { token } = antdTheme.useToken();
 const appStore = useAppStore();
 const tabBarStore = useTabBarStore();
 
@@ -62,19 +64,20 @@ onUnmounted(() => {
 <style scoped lang="less">
   .tab-bar-container {
     position: relative;
-    background-color: var(--color-bg-2);
+
     .tab-bar-box {
       display: flex;
       padding: 0 0 0 20px;
-      background-color: var(--color-bg-2);
-      border-bottom: 1px solid var(--color-border);
       .tab-bar-scroll {
-        height: 32px;
+        // height: 32px;
+        padding:6px;
         flex: 1;
         overflow: hidden;
         .tags-wrap {
-          padding: 4px 0;
-          height: 48px;
+          // border: 1px solid red;
+          padding-top: 2px;
+          margin: 0;
+          // height: 48px;
           white-space: nowrap;
           overflow-x: auto;
 
