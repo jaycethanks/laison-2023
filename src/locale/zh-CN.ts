@@ -22,6 +22,7 @@ export default {
   'menu.demo-1': 'demo-1',
   'menu.demo-2': 'demo-2',
   'menu.demo-2-1': 'demo-2-1',
+  'menu.demo-2-2': 'demo-2-2',
   'navbar.docs': '文档中心',
   'navbar.action.locale': '切换为中文',
   ...localeSettings,

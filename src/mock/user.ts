@@ -121,7 +121,7 @@ setupMock({
               },
             },
             {
-              path: 'https://juejin.cn/pins',
+              path: 'demo-2',
               name: 'demo-2',
               meta: {
                 locale: 'menu.demo-2',
@@ -135,6 +135,16 @@ setupMock({
                   meta: {
                     locale: 'menu.demo-2-1',
                     requiresAuth: true,
+                    icon: 'heat-map-outlined',
+                  },
+                },
+                {
+                  path: 'https://juejin.cn/pins',
+                  name: 'demo-2-2',
+                  meta: {
+                    locale: 'menu.demo-2-2',
+                    requiresAuth: true,
+                    external: true,
                     icon: 'heat-map-outlined',
                   },
                 },
