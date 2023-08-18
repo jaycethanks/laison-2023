@@ -3,6 +3,7 @@
   import { useI18n } from 'vue-i18n';
   import { useRoute, useRouter } from 'vue-router';
   import type { RouteMeta, RouteRecordRaw } from 'vue-router';
+  import { theme as antdTheme } from 'ant-design-vue';
   import useMenuTree from './use-menu-tree';
   import { useAppStore } from '@/store';
   import { listenerRouteChange } from '@/utils/route-listener';
@@ -31,6 +32,7 @@
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
       const { isDark } = useThemes();
+      const { token } = antdTheme.useToken();
 
       const goto = (item: RouteRecordRaw) => {
         // Open external link
@@ -132,7 +134,7 @@
 
       return () => (
         <a-menu
-          theme={ isDark.value ? 'dark' : 'light' }
+          style={{ backgroundColor: token.value.colorBgLayout, height: '100%', width: '100%' }}
           mode={topMenu.value ? 'vertical' : 'inline'}
           v-model:collapsed={collapsed.value}
           v-model:selectedKeys={openKeys.value}
@@ -141,7 +143,6 @@
           selected-keys={selectedKey.value}
           auto-open-selected={true}
           level-indent={34}
-          style="height: 100%;width:100%;"
           onCollapse={setCollapse}
         >
           {renderSubMenu()}

@@ -5,20 +5,17 @@
       <LayoutSider
         v-if="renderMenu"
         v-show="!hideMenu"
-        :theme="isDark ? 'dark' : 'light'"
         class="layout-sider"
         breakpoint="xl"
         :collapsed="collapsed"
         :collapsible="true"
         :collapsed-width="48"
         :width="menuWidth"
-        :style="{ paddingTop: navbar ? '60px' : '' }"
+        :style="layoutSiderStyles"
         :hide-trigger="true"
         @collapse="setCollapsed"
       >
-        <div class="menu-wrapper">
-          <Menu />
-        </div>
+        <Menu />
       </LayoutSider>
       <a-drawer
         v-if="hideMenu"
@@ -56,9 +53,6 @@ import usePermission from '@/hooks/permission';
 import useResponsive from '@/hooks/responsive';
 import useThemes from '@/hooks/themes';
 
-const { isDark } = useThemes();
-const { token } = antdTheme.useToken();
-
 const isInit = ref(false);
 const appStore = useAppStore();
 const userStore = useUserStore();
@@ -67,6 +61,9 @@ const route = useRoute();
 const permission = usePermission();
 useResponsive(true);
 const navbarHeight = '60px';
+
+const { isDark } = useThemes();
+const { token } = antdTheme.useToken();
 const navbar = computed(() => appStore.navbar);
 const renderMenu = computed(() => appStore.menu && !appStore.topMenu);
 const hideMenu = computed(() => appStore.hideMenu);
@@ -77,6 +74,13 @@ const menuWidth = computed(() => {
 const collapsed = computed(() => {
   return appStore.menuCollapse;
 });
+
+const layoutSiderStyles = computed(() => {
+  const colors = { backgroundColor: token.value.colorBgLayout };
+  const layout = { paddingTop: navbar.value ? '60px' : '' };
+  return { ...colors, ...layout };
+});
+
 const layoutContentStyles = computed(() => {
   const paddingLeft
       = renderMenu.value && !hideMenu.value
@@ -120,14 +124,14 @@ onMounted(() => {
     height: 100%;
   }
 
-  .layout-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    width: 100%;
-    height: @nav-size-height;
-  }
+  // .layout-navbar {
+  //   position: fixed;
+  //   top: 0;
+  //   left: 0;
+  //   z-index: 100;
+  //   width: 100%;
+  //   height: @nav-size-height;
+  // }
 
   .layout-sider {
     position: fixed;
@@ -152,28 +156,28 @@ onMounted(() => {
     }
   }
 
-  .menu-wrapper {
-    height: 100%;
-    overflow: auto;
-    overflow-x: hidden;
-    :deep(.arco-menu) {
-      ::-webkit-scrollbar {
-        width: 12px;
-        height: 4px;
-      }
+  // .menu-wrapper {
+  //   height: 100%;
+  //   overflow: auto;
+  //   overflow-x: hidden;
+  //   :deep(.arco-menu) {
+  //     ::-webkit-scrollbar {
+  //       width: 12px;
+  //       height: 4px;
+  //     }
 
-      ::-webkit-scrollbar-thumb {
-        border: 4px solid transparent;
-        background-clip: padding-box;
-        border-radius: 7px;
-        background-color: var(--color-text-4);
-      }
+  //     ::-webkit-scrollbar-thumb {
+  //       border: 4px solid transparent;
+  //       background-clip: padding-box;
+  //       border-radius: 7px;
+  //       background-color: var(--color-text-4);
+  //     }
 
-      ::-webkit-scrollbar-thumb:hover {
-        background-color: var(--color-text-3);
-      }
-    }
-  }
+  //     ::-webkit-scrollbar-thumb:hover {
+  //       background-color: var(--color-text-3);
+  //     }
+  //   }
+  // }
 
   .layout-content {
     min-height: 100vh;
