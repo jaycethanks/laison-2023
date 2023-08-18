@@ -72,6 +72,8 @@ useResponsive(true);
 const navbarHeight = '60px';
 
 const { isDark } = useThemes();
+const { token } = antdTheme.useToken();
+
 const navbar = computed(() => appStore.navbar);
 const renderMenu = computed(() => appStore.menu && !appStore.topMenu);
 const hideMenu = computed(() => appStore.hideMenu);
@@ -82,7 +84,7 @@ const menuWidth = computed(() => {
 const collapsed = computed(() => {
   return appStore.menuCollapse;
 });
-const { token } = antdTheme.useToken();
+
 const layoutSiderStyles = computed(() => {
   const colors = { backgroundColor: token.value.colorBgContainer };
   const layout = { paddingTop: navbar.value ? '60px' : '' };

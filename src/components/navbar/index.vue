@@ -212,6 +212,8 @@ const userStore = useUserStore();
 const { logout } = useUser();
 const { changeLocale, currentLocale } = useLocale();
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
+const { token } = antTheme.useToken();
+
 const locales = [...LOCALE_OPTIONS];
 const avatar = computed(() => {
   return userStore.avatar;
@@ -220,7 +222,6 @@ const theme = computed(() => {
   return appStore.theme;
 });
 const layoutHeaderStyles = computed(() => {
-  const { token } = antTheme.useToken();
   const { colorBgContainer, colorBorder } = token.value;
   const colors = { backgroundColor: colorBgContainer, borderBottom: `1px solid ${colorBorder}` };
   const layout = {
@@ -234,7 +235,6 @@ const layoutHeaderStyles = computed(() => {
   return { ...colors, ...layout };
 });
 const menuStyles = computed(() => {
-  const { token } = antTheme.useToken();
   return { backgroundColor: token.value.colorBgContainer };
 });
 const topMenu = computed(() => appStore.topMenu && appStore.menu);

@@ -144,7 +144,7 @@ setupMock({
                   meta: {
                     locale: 'menu.demo-2-2',
                     requiresAuth: true,
-                    external: true,
+                    cache: true,
                     icon: 'heat-map-outlined',
                   },
                 },

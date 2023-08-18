@@ -13,5 +13,6 @@ declare module 'vue-router' {
     noAffix?: boolean; // if set true, the tag will not affix in the tab-bar
     ignoreCache?: boolean; // if set true, the page will not be cached
     external?: boolean; // 是否为外部链接 (要不要使用 window.open 打开这个链接 ？)
+    cache?:boolean;// 是否是缓存页？ 如果是缓存页面，走 v-show 渲染逻辑
   }
 }

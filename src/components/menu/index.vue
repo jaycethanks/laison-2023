@@ -35,12 +35,22 @@
       const { token } = antdTheme.useToken();
 
       const goto = (item: RouteRecordRaw) => {
+        if (item.meta?.cache) {
+          // @jayce: 注意这里的逻辑应该在最前面
+          // meta.cache === true, 表明是一个显式被指明需要被缓存的 iframe 页面
+          selectedKey.value = [item.name as string];
+          console.log('[router.getRoutes()]: ', router.getRoutes());
+          router.push({ path: '/cacheIframePages' });
+          return;
+        }
+
         // Open external link
         if (regexUrl.test(item.path) && item.meta?.external) {
           openWindow(item.path);
           selectedKey.value = [item.name as string];
           return;
         }
+
         // Eliminate external link side effects
         const { hideInMenu, activeMenu } = item.meta as RouteMeta;
         if (route.name === item.name && !hideInMenu && !activeMenu) {
