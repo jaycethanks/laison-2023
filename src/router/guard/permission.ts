@@ -1,4 +1,4 @@
-import type { RouteRecordNormalized, Router } from 'vue-router';
+import type { RouteRecordName, RouteRecordNormalized, Router } from 'vue-router';
 
 import NProgress from 'nprogress'; // progress bar
 
@@ -13,7 +13,6 @@ export default function setupPermissionGuard(router: Router) {
     const userStore = useUserStore();
     const Permission = usePermission();
     const permissionsAllow = Permission.accessRouter(to);
-
     if (appStore.menuFromServer) {
       // 针对来自服务端的菜单配置进行处理
       // Handle routing configuration from the server
@@ -32,6 +31,13 @@ export default function setupPermissionGuard(router: Router) {
       //   await appStore.fetchServerMenuConfig();
       // }
 
+      /**
+       * todo: 如果是 cacheIframePages 这个路由，则直接放行 (注意权限的控制受不受影响，如果有影响，就去标记为 mete.cache 的路由上重定向到这个路由)
+       */
+      if (to.name && (['cacheIframePages', 'combinedPages'] as RouteRecordName[]).includes(to.name)) {
+        next();
+      }
+
       const serverMenuConfig = [...appStore.appAsyncMenus, ...WHITE_LIST];
 
       let exist = false;
@@ -45,10 +51,13 @@ export default function setupPermissionGuard(router: Router) {
           );
         }
       }
+
       if (exist && permissionsAllow) {
         next();
       }
-      else next(NOT_FOUND);
+      else {
+        next(NOT_FOUND);
+      }
     }
     else {
       if (permissionsAllow) next();

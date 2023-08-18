@@ -15,6 +15,7 @@ const generateIframePage = (records: AppRouteRecordRaw[]) => {
     },
     setup(props) {
       // const { t } = useI18n();
+      console.log('[props]: ', props);
       const iframe = ref<HTMLIFrameElement | null>(null);
       // onMounted(() => {
       //   if (iframe.value && iframe.value.contentWindow) {
@@ -31,7 +32,10 @@ const generateIframePage = (records: AppRouteRecordRaw[]) => {
             records.map((record) => {
               const meta = record.meta as RouteMetaExt;
               const { _path } = meta;
-              return <iframe v-show={props.name} ref={iframe} style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>;
+              return <div>
+                <h2>{props.name}</h2>
+              <iframe v-show={props.name} ref={iframe} style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>;
+              </div>;
             })
           }
         </div>

@@ -39,8 +39,8 @@
           // @jayce: 注意这里的逻辑应该在最前面
           // meta.cache === true, 表明是一个显式被指明需要被缓存的 iframe 页面
           selectedKey.value = [item.name as string];
-          console.log('[router.getRoutes()]: ', router.getRoutes());
-          router.push({ path: '/cacheIframePages' });
+          console.log('[item]: ', item);
+          router.push({ name: 'cacheIframePages', params: { name: item?.name as string } });
           return;
         }
 

@@ -32,7 +32,7 @@ const patchingDynamicRoutes = (serveMenuList: RouteRecordNormalized[]) => {
     const record: AppRouteRecordRaw = {
       /**
        * 1. 判断递归的层级， 如果是在第一层,那么使用 DEFAULT_LAYOUT 这个 router-view, 否则， 使用一个最简单的 Routerview, 这么做的目的是为了 fix 多层 layout 嵌套
-       * 2. 如果 路由 指定的 path 是一个 iframe 链接 (!meta.external === true), 那么使用其 name 属性覆盖 path, 将 path 指定到 meta._path
+       * 2. 如果 路由 指定的 path 是一个 链接,且没有被标记为 external (!meta.external === true),那么判定为 iframe 那么使用其 name 属性覆盖 path, 将 path 指定到 meta._path
        * 3. 有childen ? component 就是 layout , 否则， 动态生成 iframe 页面
        */
       component: (() => {
@@ -42,7 +42,7 @@ const patchingDynamicRoutes = (serveMenuList: RouteRecordNormalized[]) => {
             return DEFAULT_LAYOUT;
           }
           else {
-            // 有 childer 子属性, 但不再地一层级， 用 basic-router-view
+            // 有 children 子属性, 但不再地一层级， 用 basic-router-view
             return BASIC_LAYOUT;
           }
         }
@@ -71,13 +71,20 @@ const patchingDynamicRoutes = (serveMenuList: RouteRecordNormalized[]) => {
   });
 
   const cachePage = generateNeedCacheIframesPage(needCacheIframePages);
-  console.log('[cachePage]: ', cachePage);
   router.addRoute({
     path: '/cacheIframePages',
     name: 'cacheIframePages',
-    component: cachePage,
+    component: DEFAULT_LAYOUT,
+    redirect: { name: 'combinedPages' },
+    children: [
+      {
+        path: 'combinedPages',
+        name: 'combinedPages',
+        component: cachePage,
+        props: true, // https://router.vuejs.org/guide/essentials/passing-props.html
+      },
+    ],
   });
-  console.log('[router.getRoutes()]: ', router.getRoutes());
 };
 
 export default patchingDynamicRoutes;
