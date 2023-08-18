@@ -2,7 +2,6 @@
   <a-dropdown
     :trigger="['contextmenu']"
     :popup-max-height="false"
-    @select="actionSelect"
   >
     <span
       class="arco-tag arco-tag-size-medium arco-tag-checked"
@@ -20,46 +19,46 @@
       </span>
     </span>
     <template #overlay>
-      <a-menu>
-        <a-menu-item :disabled="disabledReload" :value="Eaction.reload">
+      <a-menu @click="actionSelect">
+        <a-menu-item :key="Eaction.reload" :disabled="disabledReload">
           <a-space>
             <ReloadOutlined />
             <span>重新加载</span>
           </a-space>
         </a-menu-item>
         <a-menu-item
+          :key="Eaction.current"
           class="sperate-line"
           :disabled="disabledCurrent"
-          :value="Eaction.current"
         >
           <a-space>
             <CloseOutlined />
             <span>关闭当前标签页</span>
           </a-space>
         </a-menu-item>
-        <a-menu-item :disabled="disabledLeft" :value="Eaction.left">
+        <a-menu-item :key="Eaction.left" :disabled="disabledLeft">
           <a-space>
             <VerticalRightOutlined />
             <span>关闭左侧标签页</span>
           </a-space>
         </a-menu-item>
         <a-menu-item
+          :key="Eaction.right"
           class="sperate-line"
           :disabled="disabledRight"
-          :value="Eaction.right"
         >
           <a-space>
             <VerticalLeftOutlined />
             <span>关闭右侧标签页</span>
           </a-space>
         </a-menu-item>
-        <a-menu-item :value="Eaction.others">
+        <a-menu-item :key="Eaction.others">
           <a-space>
             <SwapOutlined />
             <span>关闭其它标签页</span>
           </a-space>
         </a-menu-item>
-        <a-menu-item :value="Eaction.all">
+        <a-menu-item :key="Eaction.all">
           <a-space>
             <UngroupOutlined />
             <span>关闭全部标签页</span>
@@ -138,7 +137,7 @@ const tagClose = (tag: TagProps, idx: number) => {
 const findCurrentRouteIndex = () => {
   return tagList.value.findIndex(el => el.fullPath === route.fullPath);
 };
-const actionSelect = async (value: any) => {
+const actionSelect = async ({ key: value }: any) => {
   const { itemData, index } = props;
   const copyTagList = [...tagList.value];
   if (value === Eaction.current) {
