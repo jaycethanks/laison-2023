@@ -2,6 +2,7 @@
   <a-config-provider
     :locale="locale"
     :theme="{
+      // algorithm: theme.darkAlgorithm,
       token: {
         colorPrimary: '#FA541C',
       },
@@ -14,6 +15,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+
+// import { theme } from 'ant-design-vue';
 import enUS from 'ant-design-vue/es/locale/en_US';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import GlobalSetting from '@/components/global-setting/index.vue';

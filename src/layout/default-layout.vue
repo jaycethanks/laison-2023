@@ -1,53 +1,49 @@
 <template>
   <Layout class="layout" :class="{ mobile: appStore.hideMenu }">
-    <div v-if="navbar" class="layout-navbar">
-      <NavBar />
-    </div>
+    <NavBar v-if="navbar" />
     <Layout>
-      <Layout>
-        <LayoutSider
-          v-if="renderMenu"
-          v-show="!hideMenu"
-          :theme="isDark ? 'dark' : 'light'"
-          class="layout-sider"
-          breakpoint="xl"
-          :collapsed="collapsed"
-          :collapsible="true"
-          :collapsed-width="48"
-          :width="menuWidth"
-          :style="{ paddingTop: navbar ? '60px' : '' }"
-          :hide-trigger="true"
-          @collapse="setCollapsed"
-        >
-          <div class="menu-wrapper">
-            <Menu />
-          </div>
-        </LayoutSider>
-        <a-drawer
-          v-if="hideMenu"
-          :visible="drawerVisible"
-          placement="left"
-          :footer="false"
-          mask-closable
-          :closable="false"
-          @cancel="drawerCancel"
-        >
+      <LayoutSider
+        v-if="renderMenu"
+        v-show="!hideMenu"
+        :theme="isDark ? 'dark' : 'light'"
+        class="layout-sider"
+        breakpoint="xl"
+        :collapsed="collapsed"
+        :collapsible="true"
+        :collapsed-width="48"
+        :width="menuWidth"
+        :style="{ paddingTop: navbar ? '60px' : '' }"
+        :hide-trigger="true"
+        @collapse="setCollapsed"
+      >
+        <div class="menu-wrapper">
           <Menu />
-        </a-drawer>
-        <Layout class="layout-content" :style="paddingStyle">
-          <TabBar v-if="appStore.tabBar" />
-          <LayoutContent>
-            <PageLayout />
-          </LayoutContent>
-          <Footer v-if="footer" />
-        </Layout>
+        </div>
+      </LayoutSider>
+      <a-drawer
+        v-if="hideMenu"
+        :visible="drawerVisible"
+        placement="left"
+        :footer="false"
+        mask-closable
+        :closable="false"
+        @cancel="drawerCancel"
+      >
+        <Menu />
+      </a-drawer>
+      <Layout class="layout-content" :style="layoutContentStyles">
+        <TabBar v-if="appStore.tabBar" />
+        <LayoutContent>
+          <PageLayout />
+        </LayoutContent>
+        <Footer v-if="footer" />
       </Layout>
     </Layout>
   </Layout>
 </template>
 
 <script lang="ts" setup>
-import { Layout, LayoutContent, LayoutSider } from 'ant-design-vue';
+import { Layout, LayoutContent, LayoutSider, theme as antdTheme } from 'ant-design-vue';
 import { computed, onMounted, provide, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import PageLayout from './page-layout.vue';
@@ -61,6 +57,8 @@ import useResponsive from '@/hooks/responsive';
 import useThemes from '@/hooks/themes';
 
 const { isDark } = useThemes();
+const { token } = antdTheme.useToken();
+
 const isInit = ref(false);
 const appStore = useAppStore();
 const userStore = useUserStore();
@@ -79,13 +77,15 @@ const menuWidth = computed(() => {
 const collapsed = computed(() => {
   return appStore.menuCollapse;
 });
-const paddingStyle = computed(() => {
+const layoutContentStyles = computed(() => {
   const paddingLeft
       = renderMenu.value && !hideMenu.value
         ? { paddingLeft: `${menuWidth.value}px` }
         : {};
   const paddingTop = navbar.value ? { paddingTop: navbarHeight } : {};
-  return { ...paddingLeft, ...paddingTop };
+  // @jayce: 需要修改颜色， 去  src/App.vue 提供 provider 配置， 不要写死
+  const background = { backgroundColor: token.value.colorBgLayout };
+  return { ...paddingLeft, ...paddingTop, ...background };
 });
 const setCollapsed = (val: boolean) => {
   if (!isInit.value) return; // for page initialization menu state problem
@@ -178,7 +178,6 @@ onMounted(() => {
   .layout-content {
     min-height: 100vh;
     overflow-y: hidden;
-    background-color: var(--color-fill-2);
     transition: padding 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
   }
 </style>
