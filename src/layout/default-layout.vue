@@ -76,7 +76,7 @@ const collapsed = computed(() => {
 });
 
 const layoutSiderStyles = computed(() => {
-  const colors = { backgroundColor: token.value.colorBgLayout };
+  const colors = { backgroundColor: token.value.colorBgContainer };
   const layout = { paddingTop: navbar.value ? '60px' : '' };
   return { ...colors, ...layout };
 });

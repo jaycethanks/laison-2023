@@ -134,7 +134,7 @@
 
       return () => (
         <a-menu
-          style={{ backgroundColor: token.value.colorBgLayout, height: '100%', width: '100%' }}
+          style={{ backgroundColor: token.value.colorBgContainer, height: '100%', width: '100%' }}
           mode={topMenu.value ? 'vertical' : 'inline'}
           v-model:collapsed={collapsed.value}
           v-model:selectedKeys={openKeys.value}
