@@ -32,9 +32,9 @@ export default function setupPermissionGuard(router: Router) {
       // }
 
       /**
-       * todo: 如果是 cacheIframePages 这个路由，则直接放行 (注意权限的控制受不受影响，如果有影响，就去标记为 mete.cache 的路由上重定向到这个路由)
+       * todo: 如果是 iframeView 这个路由，则直接放行 (注意权限的控制受不受影响，如果有影响，就去标记为 mete.cache 的路由上重定向到这个路由)
        */
-      if (to.name && (['cacheIframePages', 'combinedPages'] as RouteRecordName[]).includes(to.name)) {
+      if (to.name && (['iframeView', 'cachePage'] as RouteRecordName[]).includes(to.name)) {
         next();
       }
 

@@ -16,7 +16,7 @@ export default {
   'menu.profile': 'Profile',
   'menu.visualization': 'Data Visualization',
   'menu.user': 'User Center',
-  'menu.arcoWebsite': 'Laison',
+  'menu.arcoWebsite': 'LAI_TECH',
   'menu.faq': 'FAQ',
   'navbar.docs': 'Docs',
   'navbar.action.locale': 'Switch to English',

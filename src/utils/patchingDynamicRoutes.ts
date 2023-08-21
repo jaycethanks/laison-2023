@@ -72,16 +72,15 @@ const patchingDynamicRoutes = (serveMenuList: RouteRecordNormalized[]) => {
 
   const cachePage = generateNeedCacheIframesPage(needCacheIframePages);
   router.addRoute({
-    path: '/cacheIframePages',
-    name: 'cacheIframePages',
+    path: '/iframeView',
+    name: 'iframeView',
     component: DEFAULT_LAYOUT,
-    redirect: { name: 'combinedPages' },
     children: [
       {
-        path: 'combinedPages',
-        name: 'combinedPages',
+        path: 'cachePage',
+        name: 'cachePage',
         component: cachePage,
-        props: true, // https://router.vuejs.org/guide/essentials/passing-props.html
+        // props: true, // https://router.vuejs.org/guide/essentials/passing-props.html
       },
     ],
   });

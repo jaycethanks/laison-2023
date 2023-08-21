@@ -3,7 +3,7 @@
     <div class="left-side">
       <Logo />
       <a-typography-title :style="{ fontSize: '18px' }" :heading="5">
-        Laison
+        LAI_TECH
       </a-typography-title>
       <MenuFoldOutlined
         v-if="!topMenu && appStore.device === 'mobile'"

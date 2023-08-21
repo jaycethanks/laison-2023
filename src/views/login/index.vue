@@ -7,7 +7,7 @@
       /> -->
       <Logo />
       <div class="logo-text">
-        Laison Tech
+        LAI_TECH Tech
       </div>
     </div>
     <LoginBanner />

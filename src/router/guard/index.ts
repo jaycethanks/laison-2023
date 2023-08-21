@@ -6,6 +6,7 @@ import { setRouteEmitter } from '@/utils/route-listener';
 function setupPageGuard(router: Router) {
   router.beforeEach(async (to) => {
     // emit route change
+    console.log('[to]: ', to);
     setRouteEmitter(to);
   });
 }

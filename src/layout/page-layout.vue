@@ -7,7 +7,10 @@
         :key="route.fullPath"
       />
       <keep-alive v-else :include="cacheList">
-        <component :is="Component" :key="route.fullPath" />
+        <div>
+          <h2>cached</h2>
+          <component :is="Component" :key="route.fullPath" />
+        </div>
       </keep-alive>
     </transition>
   </router-view>

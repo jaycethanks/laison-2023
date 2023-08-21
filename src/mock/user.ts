@@ -148,6 +148,16 @@ setupMock({
                     icon: 'heat-map-outlined',
                   },
                 },
+                {
+                  path: 'http://dict.cn/',
+                  name: 'demo-2-3',
+                  meta: {
+                    locale: 'menu.demo-2-3',
+                    requiresAuth: true,
+                    cache: true,
+                    icon: 'heat-map-outlined',
+                  },
+                },
               ],
             },
           ],

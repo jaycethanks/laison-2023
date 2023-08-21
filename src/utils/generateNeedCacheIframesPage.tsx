@@ -1,5 +1,5 @@
-import { defineComponent, ref } from 'vue';
-import type { RouteMeta } from 'vue-router';
+import { defineComponent, reactive, ref } from 'vue';
+import { type RouteMeta, useRoute } from 'vue-router';
 import type { AppRouteRecordRaw } from '@/router/routes/types';
 
 interface RouteMetaExt extends RouteMeta {
@@ -8,6 +8,7 @@ interface RouteMetaExt extends RouteMeta {
 
 const generateIframePage = (records: AppRouteRecordRaw[]) => {
   return defineComponent({
+    name: 'CachePage',
     props: {
       name: {
         type: String,
@@ -15,26 +16,23 @@ const generateIframePage = (records: AppRouteRecordRaw[]) => {
     },
     setup(props) {
       // const { t } = useI18n();
-      console.log('[props]: ', props);
+      const state = reactive({
+        count: 0,
+      });
+      const { query } = useRoute();
+      const { name } = query;
+      console.log('[query]: ', query);
       const iframe = ref<HTMLIFrameElement | null>(null);
-      // onMounted(() => {
-      //   if (iframe.value && iframe.value.contentWindow) {
-      //     const contentDocument = iframe.value.contentWindow.document;
-      //     const bodyElement = contentDocument.body;
-      //     const contentHeight = bodyElement.scrollHeight;
-
-      //     console.log('Content Height:', contentHeight);
-      //   }
-      // });
       return () => (
         <div class="iframes-cached-page" style={{ overflow: 'hidden' }}>
+          <button onClick={() => { state.count++; }}>{state.count}</button>
           {
             records.map((record) => {
               const meta = record.meta as RouteMetaExt;
-              const { _path } = meta;
+              const { _path } = meta
+              ;
               return <div>
-                <h2>{props.name}</h2>
-              <iframe v-show={props.name} ref={iframe} style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>;
+              <iframe v-show={name === record.name} ref={iframe} style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>
               </div>;
             })
           }

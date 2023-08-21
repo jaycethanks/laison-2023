@@ -11,7 +11,7 @@ import { isString } from '@/utils/is';
 const formatTag = (route: RouteLocationNormalized): TagProps => {
   const { name, meta, fullPath, query } = route;
   return {
-    title: meta.locale || '',
+    title: meta.locale || query.locale as string || '',
     name: String(name),
     fullPath,
     query,
@@ -23,7 +23,7 @@ const BAN_LIST = [REDIRECT_ROUTE_NAME];
 
 const useAppStore = defineStore('tabBar', {
   state: (): TabBarState => ({
-    cacheTabList: new Set([DEFAULT_ROUTE_NAME]),
+    cacheTabList: new Set([DEFAULT_ROUTE_NAME, 'CachePage']),
     tagList: [DEFAULT_ROUTE],
   }),
 
