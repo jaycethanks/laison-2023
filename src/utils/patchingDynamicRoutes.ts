@@ -3,12 +3,12 @@ import { cloneDeep } from 'lodash';
 import walk from './traverse';
 import generateIframePage from './generateIframePage';
 
-import generateNeedCacheIframesPage from './generateNeedCacheIframesPage';
+import generateIframePages from './generateIframePages';
 import { appRoutes } from '@/router/routes';
 import type { AppRouteRecordRaw } from '@/router/routes/types';
 import router from '@/router';
 import { regexUrl } from '@/utils';
-import { BASIC_LAYOUT, DEFAULT_LAYOUT } from '@/router/routes/base';
+import { DEFAULT_LAYOUT, PAGE_LAYOUT } from '@/router/routes/base';
 
 const filterNotExistRoutes = (localRoutes: RouteRecordNormalized[], serveMenuList: RouteRecordNormalized[]) => {
   const localRoutesPath = localRoutes.map(it => it.path);
@@ -43,7 +43,7 @@ const patchingDynamicRoutes = (serveMenuList: RouteRecordNormalized[]) => {
           }
           else {
             // 有 children 子属性, 但不再地一层级， 用 basic-router-view
-            return BASIC_LAYOUT;
+            return PAGE_LAYOUT;
           }
         }
         else {
@@ -70,16 +70,16 @@ const patchingDynamicRoutes = (serveMenuList: RouteRecordNormalized[]) => {
     router.addRoute(it);
   });
 
-  const cachePage = generateNeedCacheIframesPage(needCacheIframePages);
+  const iframes = generateIframePages(needCacheIframePages);
   router.addRoute({
     path: '/iframeView',
     name: 'iframeView',
     component: DEFAULT_LAYOUT,
     children: [
       {
-        path: 'cachePage',
-        name: 'cachePage',
-        component: cachePage,
+        path: 'iframes',
+        name: 'iframes',
+        component: iframes,
         // props: true, // https://router.vuejs.org/guide/essentials/passing-props.html
       },
     ],

@@ -23,7 +23,7 @@ const BAN_LIST = [REDIRECT_ROUTE_NAME];
 
 const useAppStore = defineStore('tabBar', {
   state: (): TabBarState => ({
-    cacheTabList: new Set([DEFAULT_ROUTE_NAME, 'CachePage']),
+    cacheTabList: new Set([DEFAULT_ROUTE_NAME, 'Iframes']),
     tagList: [DEFAULT_ROUTE],
   }),
 

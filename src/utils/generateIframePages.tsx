@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { type RouteMeta, useRoute } from 'vue-router';
 import type { AppRouteRecordRaw } from '@/router/routes/types';
 
@@ -6,9 +6,9 @@ interface RouteMetaExt extends RouteMeta {
   _path?: string
 }
 
-const generateIframePage = (records: AppRouteRecordRaw[]) => {
+const Iframes = (records: AppRouteRecordRaw[]) => {
   return defineComponent({
-    name: 'CachePage',
+    name: 'Iframes',
     props: {
       name: {
         type: String,
@@ -16,23 +16,17 @@ const generateIframePage = (records: AppRouteRecordRaw[]) => {
     },
     setup(props) {
       // const { t } = useI18n();
-      const state = reactive({
-        count: 0,
-      });
-      const { query } = useRoute();
-      const { name } = query;
-      console.log('[query]: ', query);
       const iframe = ref<HTMLIFrameElement | null>(null);
       return () => (
         <div class="iframes-cached-page" style={{ overflow: 'hidden' }}>
-          <button onClick={() => { state.count++; }}>{state.count}</button>
           {
             records.map((record) => {
               const meta = record.meta as RouteMetaExt;
-              const { _path } = meta
-              ;
+              const { _path } = meta;
               return <div>
-              <iframe v-show={name === record.name} ref={iframe} style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>
+                {record.name}
+                {/* bugfix: 解构会丢失响应性从而导致query变化，页面不刷新 */}
+              <iframe v-show={useRoute().query.name === record.name} ref={iframe} style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>
               </div>;
             })
           }
@@ -42,4 +36,4 @@ const generateIframePage = (records: AppRouteRecordRaw[]) => {
   });
 };
 
-export default generateIframePage;
+export default Iframes;

@@ -39,7 +39,7 @@
           // @jayce: 注意这里的逻辑应该在最前面
           // meta.cache === true, 表明是一个显式被指明需要被缓存的 iframe 页面
           selectedKey.value = [item.name as string];
-          router.push({ path: '/iframeView/cachePage', query: { name: item?.name as string, locale: item.meta.locale } });
+          router.push({ path: '/iframeView/iframes', query: { name: item?.name as string, locale: item.meta.locale } });
           return;
         }
 

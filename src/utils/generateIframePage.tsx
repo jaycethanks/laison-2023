@@ -22,7 +22,6 @@ const generateIframePage = (_meta: RouteMetaExt) => {
       // });
       return () => (
         <div style={{ overflow: 'hidden' }}>
-          {/* <h1>{t(locale || '')}</h1> */}
           <iframe ref={iframe} style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>
         </div>
       );
