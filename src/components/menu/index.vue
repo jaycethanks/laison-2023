@@ -8,7 +8,6 @@
   import { useAppStore } from '@/store';
   import { listenerRouteChange } from '@/utils/route-listener';
   import { openWindow, regexUrl } from '@/utils';
-  import useThemes from '@/hooks/themes';
 
   export default defineComponent({
     emit: ['collapse'],
@@ -31,13 +30,12 @@
       const topMenu = computed(() => appStore.topMenu);
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
-      const { isDark } = useThemes();
       const { token } = antdTheme.useToken();
 
       const goto = (item: RouteRecordRaw) => {
-        if (item.meta?.cache) {
+        // 要求缓存 + 是一个 url 链接 + 且不是外链 => 缓存的 iframe 页面
+        if (!item.meta?.ignoreCache && regexUrl.test(item.path) && !(item.meta?.external)) {
           // @jayce: 注意这里的逻辑应该在最前面
-          // meta.cache === true, 表明是一个显式被指明需要被缓存的 iframe 页面
           selectedKey.value = [item.name as string];
           router.push({ path: '/iframeView/iframes', query: { name: item?.name as string, locale: item.meta.locale } });
           return;

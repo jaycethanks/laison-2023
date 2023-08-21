@@ -2,7 +2,6 @@ import { type RouteMeta, type RouteRecordNormalized } from 'vue-router';
 import { cloneDeep } from 'lodash';
 import walk from './traverse';
 import generateIframePage from './generateIframePage';
-
 import generateIframePages from './generateIframePages';
 import { appRoutes } from '@/router/routes';
 import type { AppRouteRecordRaw } from '@/router/routes/types';
@@ -10,7 +9,10 @@ import router from '@/router';
 import { regexUrl } from '@/utils';
 import { DEFAULT_LAYOUT, PAGE_LAYOUT } from '@/router/routes/base';
 
-const filterNotExistRoutes = (localRoutes: RouteRecordNormalized[], serveMenuList: RouteRecordNormalized[]) => {
+const filterNotExistRoutes = (
+  localRoutes: RouteRecordNormalized[],
+  serveMenuList: RouteRecordNormalized[],
+) => {
   const localRoutesPath = localRoutes.map(it => it.path);
   return serveMenuList.filter(({ path }) => {
     return !localRoutesPath.includes(path);
@@ -18,53 +20,64 @@ const filterNotExistRoutes = (localRoutes: RouteRecordNormalized[], serveMenuLis
 };
 
 const isIframeLink = (path: string, meta: RouteMeta) => {
-  return (regexUrl.test(path) && !meta?.external);
+  return regexUrl.test(path) && !meta?.external;
 };
 
 const patchingDynamicRoutes = (serveMenuList: RouteRecordNormalized[]) => {
   // 过滤本地没有的路由
-  const preDynamicRoutes = filterNotExistRoutes(appRoutes, cloneDeep(serveMenuList));
+  const preDynamicRoutes = filterNotExistRoutes(
+    appRoutes,
+    cloneDeep(serveMenuList),
+  );
   const needCacheIframePages: AppRouteRecordRaw[] = [];
 
-  walk<RouteRecordNormalized>((item, _index, _arr, deep) => {
-    const { children, meta, name, path } = item;
-    const _meta = { ...meta, ...(isIframeLink(path, meta) ? { _path: path } : {}) };
-    const record: AppRouteRecordRaw = {
-      /**
-       * 1. 判断递归的层级， 如果是在第一层,那么使用 DEFAULT_LAYOUT 这个 router-view, 否则， 使用一个最简单的 Routerview, 这么做的目的是为了 fix 多层 layout 嵌套
-       * 2. 如果 路由 指定的 path 是一个 链接,且没有被标记为 external (!meta.external === true),那么判定为 iframe 那么使用其 name 属性覆盖 path, 将 path 指定到 meta._path
-       * 3. 有childen ? component 就是 layout , 否则， 动态生成 iframe 页面
-       */
-      component: (() => {
-        if (children) {
-          if (deep === 1) {
-            // 有 children 子属性, 且所在层级为第一层 用 DEFAULT_LAYOUT 这个 router-view
-            return DEFAULT_LAYOUT;
+  walk<RouteRecordNormalized>(
+    (item, _index, _arr, deep) => {
+      const { children, meta, name, path } = item;
+      const _meta = {
+        ...meta,
+        ...(isIframeLink(path, meta) ? { _path: path } : {}),
+      };
+      const record: AppRouteRecordRaw = {
+        /**
+         * 1. 判断递归的层级， 如果是在第一层,那么使用 DEFAULT_LAYOUT 这个 router-view, 否则， 使用一个最简单的 Routerview, 这么做的目的是为了 fix 多层 layout 嵌套
+         * 2. 如果 路由 指定的 path 是一个 链接,且没有被标记为 external (!meta.external === true),那么判定为 iframe 那么使用其 name 属性覆盖 path, 将 path 指定到 meta._path
+         * 3. 有childen ? component 就是 layout , 否则， 动态生成 iframe 页面
+         */
+        component: (() => {
+          if (children) {
+            if (deep === 1) {
+              // 有 children 子属性, 且所在层级为第一层 用 DEFAULT_LAYOUT 这个 router-view
+              return DEFAULT_LAYOUT;
+            }
+            else {
+              // 有 children 子属性, 但不再地一层级， 用 basic-router-view
+              return PAGE_LAYOUT;
+            }
           }
           else {
-            // 有 children 子属性, 但不再地一层级， 用 basic-router-view
-            return PAGE_LAYOUT;
+            // 没有 children 子属性, 说明是一个渲染页
+            // ! 这里， 如果后续要支持动态配置菜单， 那么这里应该是一个 全量引入的 本地 component map, 然后用 path 匹配映射路径去动态引入对应的组件
+            return isIframeLink(path, meta) ? generateIframePage(_meta) : null;
           }
-        }
-        else {
-          // 没有 children 子属性, 说明是一个渲染页
-          return generateIframePage(_meta);
-        }
-      })(),
-      path: isIframeLink(path, meta) ? (name || 'noname') as any : path,
-      meta: _meta,
-      name,
-      children: children as AppRouteRecordRaw[],
-    };
+        })(),
+        path: isIframeLink(path, meta) ? ((name || 'noname') as any) : path,
+        meta: _meta,
+        name,
+        children: children as AppRouteRecordRaw[],
+      };
 
-    if (meta.cache) {
-      // 1.针对递归的每一个路由进行判断， 是否存在需要缓存的路由, 将所有需要缓存的路由摘取出来，生成一份 v-show 集合页面
-      // 2.后续在页面的跳转之前，去做判断，如果 meta.cache === true, 那么就重定向 到这个集合页面
-      needCacheIframePages.push(record);
-    }
+      if (isIframeLink(path, meta) && !meta.ignoreCache) {
+        // 1.针对递归的每一个路由进行判断， 是否存在需要缓存的路由, 将所有需要缓存的路由摘取出来，生成一份 v-show 集合页面
+        // 2.是 iframe 链接 + 要求缓存
+        needCacheIframePages.push(record);
+      }
 
-    (_arr[_index] as unknown as AppRouteRecordRaw) = record;
-  }, preDynamicRoutes, 'children');
+      (_arr[_index] as unknown as AppRouteRecordRaw) = record;
+    },
+    preDynamicRoutes,
+    'children',
+  );
 
   preDynamicRoutes.forEach((it) => {
     router.addRoute(it);

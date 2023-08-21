@@ -24,7 +24,6 @@ const Iframes = (records: AppRouteRecordRaw[]) => {
               const meta = record.meta as RouteMetaExt;
               const { _path } = meta;
               return <div>
-                {record.name}
                 {/* bugfix: 解构会丢失响应性从而导致query变化，页面不刷新 */}
               <iframe v-show={useRoute().query.name === record.name} ref={iframe} style={{ height: '100vh', width: '100%' }} src={_path} frameborder="0"></iframe>
               </div>;

@@ -112,7 +112,7 @@ setupMock({
           },
           children: [
             {
-              path: 'https://juejin.cn/pins',
+              path: 'https://cn.bing.com/dict',
               name: 'demo-1',
               meta: {
                 locale: 'menu.demo-1',
@@ -144,17 +144,16 @@ setupMock({
                   meta: {
                     locale: 'menu.demo-2-2',
                     requiresAuth: true,
-                    cache: true,
+                    ignoreCache: true,
                     icon: 'heat-map-outlined',
                   },
                 },
                 {
-                  path: 'http://dict.cn/',
+                  path: 'https://www.91dict.com/',
                   name: 'demo-2-3',
                   meta: {
                     locale: 'menu.demo-2-3',
                     requiresAuth: true,
-                    cache: true,
                     icon: 'heat-map-outlined',
                   },
                 },
