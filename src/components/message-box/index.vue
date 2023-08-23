@@ -1,28 +1,31 @@
 <template>
-  <a-spin style="display: block" :loading="loading">
-    <a-tabs v-model:activeKey="messageType" type="rounded" destroy-on-hide>
-      <a-tab-pane v-for="item in tabList" :key="item.key">
-        <template #title>
-          <span> {{ item.title }}{{ formatUnreadLength(item.key) }} </span>
-        </template>
-        <a-result v-if="!renderList.length" status="404">
-          <template #subtitle>
-            {{ $t('messageBox.noContent') }}
-          </template>
-        </a-result>
-        <List
-          :render-list="renderList"
-          :unread-count="unreadCount"
-          @itemClick="handleItemClick"
-        />
-      </a-tab-pane>
-      <template #extra>
-        <a-button type="text" @click="emptyList">
-          {{ $t('messageBox.tab.button') }}
-        </a-button>
+  <!-- <a-spin style="display: block" :loading="loading"> -->
+  <a-tabs
+    v-model:activeKey="messageType"
+    type="card"
+    destroy-on-hide
+    :loading="loading"
+  >
+    <a-tab-pane v-for="item in tabList" :key="item.key">
+      <template #tab>
+        <span> {{ item.title }}{{ formatUnreadLength(item.key) }} </span>
       </template>
-    </a-tabs>
-  </a-spin>
+      <a-result v-if="!renderList.length" status="404">
+        {{ $t('messageBox.noContent') }}
+      </a-result>
+      <List
+        :render-list="renderList"
+        :unread-count="unreadCount"
+        @itemClick="handleItemClick"
+      />
+    </a-tab-pane>
+    <template #rightExtra>
+      <a-button type="text" @click="emptyList">
+        {{ $t('messageBox.tab.button') }}
+      </a-button>
+    </template>
+  </a-tabs>
+  <!-- </a-spin> -->
 </template>
 
 <script lang="ts" setup>

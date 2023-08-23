@@ -2,9 +2,8 @@
   <LayoutHeader :style="layoutHeaderStyles">
     <div class="left-side">
       <Logo />
-      <a-typography-title :style="{ fontSize: '18px' }" :heading="5">
-        LAI_TECH
-      </a-typography-title>
+      <!-- <a-typography-title :level="5" content="LAI_TECH" /> -->
+      <span style="font-size: 18px;">LAI_TECH</span>
       <MenuFoldOutlined
         v-if="!topMenu && appStore.device === 'mobile'"
         style="font-size: 22px; cursor: pointer"
@@ -22,7 +21,7 @@
     >
       <a-menu-item>
         <a-tooltip :title="$t('settings.search')">
-          <a-button class="nav-btn" type="outline" :icon="h(SearchOutlined)">
+          <a-button class="nav-btn" type="text" :icon="h(SearchOutlined)">
             <template #icon>
               <SearchOutlined />
             </template>
@@ -34,7 +33,7 @@
         <a-tooltip :title="$t('settings.language')">
           <a-button
             class="nav-btn"
-            type="outline"
+            type="text"
             :icon="h(GlobalOutlined)"
             @click="setDropDownVisible"
           />
@@ -63,7 +62,7 @@
         >
           <a-button
             class="nav-btn"
-            type="outline"
+            type="text"
             style="display: flex; justify-content: center; align-items: center"
             @click="handleToggleTheme"
           >
@@ -80,7 +79,7 @@
             <a-badge :count="9" dot>
               <a-button
                 class="nav-btn"
-                type="outline"
+                type="text"
                 :icon="h(BellOutlined)"
                 @click="setPopoverVisible"
               />
@@ -109,7 +108,7 @@
         >
           <a-button
             class="nav-btn"
-            type="outline"
+            type="text"
             :icon="isFullscreen ? h(CompressOutlined) : h(ExpandOutlined)"
             @click="toggleFullScreen"
           />
@@ -119,7 +118,7 @@
         <a-tooltip :title="$t('settings.title')">
           <a-button
             class="nav-btn"
-            type="outline"
+            type="text"
             :icon="h(SettingOutlined)"
             @click="setVisible"
           />
@@ -240,10 +239,10 @@ const menuStyles = computed(() => {
 const topMenu = computed(() => appStore.topMenu && appStore.menu);
 const isDark = useDark({
   selector: 'body',
-  attribute: 'arco-theme',
+  attribute: 'laison-theme',
   valueDark: 'dark',
   valueLight: 'light',
-  storageKey: 'arco-theme',
+  storageKey: 'laison-theme',
   onChanged(dark: boolean) {
     // overridden default behavior
     appStore.toggleTheme(dark);

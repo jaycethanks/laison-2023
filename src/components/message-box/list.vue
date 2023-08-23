@@ -49,7 +49,6 @@
               </a-typography-paragraph>
               <a-typography-text
                 v-if="item.type === 'message'"
-                class="time-text"
               >
                 {{ item.time }}
               </a-typography-text>
