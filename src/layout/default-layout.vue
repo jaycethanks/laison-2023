@@ -60,7 +60,6 @@ import Footer from '@/components/footer/index.vue';
 import TabBar from '@/components/tab-bar/index.vue';
 import usePermission from '@/hooks/permission';
 import useResponsive from '@/hooks/responsive';
-import useThemes from '@/hooks/themes';
 
 const isInit = ref(false);
 const appStore = useAppStore();
@@ -71,7 +70,7 @@ const permission = usePermission();
 useResponsive(true);
 const navbarHeight = '60px';
 
-const { isDark } = useThemes();
+// const { isDark } = useThemes();
 const { token } = antdTheme.useToken();
 
 const navbar = computed(() => appStore.navbar);

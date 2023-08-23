@@ -9,12 +9,7 @@ interface RouteMetaExt extends RouteMeta {
 const Iframes = (records: AppRouteRecordRaw[]) => {
   return defineComponent({
     name: 'Iframes',
-    props: {
-      name: {
-        type: String,
-      },
-    },
-    setup(props) {
+    setup() {
       // const { t } = useI18n();
       const iframe = ref<HTMLIFrameElement | null>(null);
       return () => (

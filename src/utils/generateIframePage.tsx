@@ -6,7 +6,7 @@ interface RouteMetaExt extends RouteMeta {
 }
 
 const generateIframePage = (_meta: RouteMetaExt) => {
-  const { _path, locale, icon } = _meta;
+  const { _path } = _meta;
   return defineComponent({
     setup() {
       // const { t } = useI18n();
