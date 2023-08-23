@@ -7,7 +7,8 @@ export default function useLocale() {
   const currentLocale = computed(() => {
     return i18.locale.value;
   });
-  const changeLocale = (value: string) => {
+  const changeLocale = ({ key }: string) => {
+    console.log('[value]: ', value);
     if (i18.locale.value === value) {
       return;
     }

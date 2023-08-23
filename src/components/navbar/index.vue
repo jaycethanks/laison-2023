@@ -39,10 +39,10 @@
             @click="setDropDownVisible"
           />
         </a-tooltip>
-        <a-dropdown trigger="click" @select="changeLocale as any">
+        <a-dropdown trigger="click">
           <div ref="triggerBtn" class="trigger-btn" />
           <template #overlay>
-            <a-menu>
+            <a-menu selectable @select="changeLocale as any">
               <a-menu-item v-for="item in locales" :key="item.value">
                 <CheckSquareOutlined v-show="item.value === currentLocale" />
                 {{ item.label }}
