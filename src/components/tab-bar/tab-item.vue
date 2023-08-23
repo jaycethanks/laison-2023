@@ -3,7 +3,7 @@
     :trigger="['contextmenu']"
     :popup-max-height="false"
   >
-    <span
+    <a-tag
       class="arco-tag arco-tag-size-medium arco-tag-checked"
       :class="{ 'link-activated': itemData.fullPath === $route.fullPath }"
       @click="goto(itemData)"
@@ -17,7 +17,7 @@
       >
         <CloseOutlined />
       </span>
-    </span>
+    </a-tag>
     <template #overlay>
       <a-menu @click="actionSelect">
         <a-menu-item :key="Eaction.reload" :disabled="disabledReload">
@@ -191,7 +191,7 @@ const actionSelect = async ({ key: value }: any) => {
     text-decoration: none;
   }
   .link-activated {
-    color: rgb(var(--link-6));
+    color: #f40;
     .tag-link {
       color: rgb(var(--link-6));
     }

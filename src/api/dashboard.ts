@@ -1,9 +1,11 @@
 import axios from 'axios';
-import type { TableData } from '@arco-design/web-vue/es/table/interface';
 
 export interface ContentDataRecord {
   x: string
   y: number
+}
+interface TableData {
+
 }
 
 export function queryContentData() {
