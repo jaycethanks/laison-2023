@@ -1,3 +1,6 @@
+// https://cz-git.qbb.sh/zh/config/
+
+
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   prompt: {
@@ -17,17 +20,18 @@ module.exports = {
     },
     // prettier-ignore
     types: [
-        { value: "feat",     name: "feat:\t\t✨  新增功能", emoji: ":sparkles:" },
-        { value: "fix",      name: "fix:\t\t🐛  修复缺陷", emoji: ":bug:" },
-        { value: "docs",     name: "docs:\t\t📝  文档变更", emoji: ":memo:" },
-        { value: "style",    name: "style:\t\t💄  代码格式-不影响功能，例如代码格式修正", emoji: ":lipstick:" },
-        { value: "refactor", name: "refactor:\t\t🚧️  代码重构-不包括 bug 修复、功能新增", emoji: ":recycle:" },
-        { value: "perf",     name: "perf:\t\t🚀️  性能优化", emoji: ":rocket:" },
-        { value: "test",     name: "test:\t\t✅  添加疏漏测试或已有测试改动", emoji: ":white_check_mark:"},
-        { value: "build",    name: "build:\t\t📦️  构建流程、外部依赖变更（如升级 npm 包、修改 vite 配置等）", emoji: ":package:"},
-        { value: "ci",       name: "ci:\t\t🎡  修改 CI 配置、脚本",  emoji: ":ferris_wheel:"},
-        { value: "revert",   name: "revert:\t\t⏪️  回滚 commit",emoji: ":rewind:"},
-        { value: "chore",    name: "chore:\t\t🔨  对构建过程或辅助工具和库的更改（不影响源文件）", emoji: ":hammer:"},
+        { value: "feat",     name: "feat:        ✨  新增功能", emoji: ":sparkles:" },
+        { value: "fix",      name: "fix:         🐛  修复缺陷", emoji: ":bug:" },
+        { value: "chore",    name: "chore:       🔨  对构建过程或辅助工具和库的更改（不影响源文件）", emoji: ":hammer:"},
+        { value: "docs",     name: "docs:        📝  文档变更", emoji: ":memo:" },
+        { value: "style",    name: "style:       💄  代码格式（不影响功能，例如代码格式修正）", emoji: ":lipstick:" },
+        { value: "build",    name: "build:       📦️  构建流程、外部依赖变更（如升级 npm 包、修改 vite 配置等）", emoji: ":package:"},
+        { value: "perf",     name: "perf:        ⚡️  性能优化", emoji: ":zap:" },
+        { value: "revert",   name: "revert:      ⏪️  回滚 commit",emoji: ":rewind:"},
+        { value: "-",        name: "-:           ⚠️   追加提交上一次commit, 尽量不要使用,谁用谁就是最懒的,你用你就是最懒的",emoji: ":warn:"},
+        { value: "refactor", name: "refactor:    🚧️  代码重构（不包括 bug 修复、功能新增）", emoji: ":recycle:" },
+        { value: "test",     name: "test:        ✅  添加疏漏测试或已有测试改动", emoji: ":white_check_mark:"},
+        { value: "ci",       name: "ci:          🎡  修改 CI 配置、脚本",  emoji: ":ferris_wheel:"},
       ],
     useEmoji: true,
     emojiAlign: 'center',

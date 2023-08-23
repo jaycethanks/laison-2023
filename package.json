@@ -6,6 +6,7 @@
   "author": "ArcoDesign Team",
   "license": "MIT",
   "scripts": {
+    "commit":"pnpm czg",
     "dev": "vite --config ./config/vite.config.dev.ts",
     "build": "vue-tsc --noEmit && vite build --config ./config/vite.config.prod.ts",
     "report": "cross-env REPORT=true npm run build",
@@ -24,7 +25,6 @@
       "eslint --fix"
     ]
   },
-  
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
     "@vueuse/core": "^9.3.0",
@@ -57,7 +57,6 @@
     "commitizen": "^4.3.0",
     "consola": "^2.15.3",
     "cross-env": "^7.0.3",
-    "cz-git": "^1.7.1",
     "czg": "^1.7.1",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
