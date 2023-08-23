@@ -11,9 +11,18 @@
     "report": "cross-env REPORT=true npm run build",
     "preview": "npm run build && vite preview --host",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "lint-staged": "npx lint-staged",
     "lint":"npx eslint .",
     "lint:fix":"npx eslint . --fix",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "eslint --fix"
+    ],
+    "*.vue": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
