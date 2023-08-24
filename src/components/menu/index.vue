@@ -3,8 +3,6 @@
   import { useI18n } from 'vue-i18n';
   import { useRoute, useRouter } from 'vue-router';
   import type { RouteMeta, RouteRecordRaw } from 'vue-router';
-  import { theme as antdTheme } from 'ant-design-vue';
-  import useThemes from '../../hooks/themes';
   import useMenuTree from './use-menu-tree';
   import { useAppStore } from '@/store';
   import { listenerRouteChange } from '@/utils/route-listener';
@@ -30,8 +28,8 @@
       const topMenu = computed(() => appStore.topMenu);
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
-      const { isDark } = useThemes();
-      const { token } = antdTheme.useToken();
+      // const { isDark } = useThemes();
+      // const { token } = antdTheme.useToken();
 
       const goto = (item: RouteRecordRaw) => {
         // 要求缓存 + 是一个 url 链接 + 且不是外链 => 缓存的 iframe 页面

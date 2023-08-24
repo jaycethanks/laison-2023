@@ -284,6 +284,7 @@ const switchRoles = async () => {
   const res = await userStore.switchRoles();
   Message.success(res as string);
 };
+// eslint-disable-next-line unused-imports/no-unused-vars
 const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
 </script>
 
