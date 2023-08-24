@@ -1,14 +1,10 @@
 <template>
   <LayoutHeader :style="layoutHeaderStyles">
     <div class="left-side">
-      <Logo />
+      <!-- <Logo /> -->
       <!-- <a-typography-title :level="5" content="LAI_TECH" /> -->
-      <span style="font-size: 18px;">LAI_TECH</span>
-      <MenuFoldOutlined
-        v-if="!topMenu && appStore.device === 'mobile'"
-        style="font-size: 22px; cursor: pointer"
-        @click="toggleDrawerMenu"
-      />
+      <!-- <span style="font-size: 18px;">LAI_TECH</span> -->
+      <menuCollapseSwitcher v-if="!topMenu" />
     </div>
     <div class="center-side">
       <Menu v-if="topMenu" />
@@ -189,7 +185,6 @@ import {
   ExpandOutlined,
   GlobalOutlined,
   LogoutOutlined,
-  MenuFoldOutlined,
   SearchOutlined,
   SettingOutlined,
   TagOutlined,
@@ -197,20 +192,28 @@ import {
 } from '@ant-design/icons-vue';
 import { useDark, useFullscreen, useToggle } from '@vueuse/core';
 import MessageBox from '../message-box/index.vue';
-import Logo from '@/assets/logo.svg';
 import { useAppStore, useUserStore } from '@/store';
 import { LOCALE_OPTIONS } from '@/locale';
 import useLocale from '@/hooks/locale';
 import useUser from '@/hooks/user';
 import Menu from '@/components/menu/index.vue';
+import menuCollapseSwitcher from '@/components/menuCollapseSwitcher/index.vue';
 import IconMoonOutlined from '@/assets/svgIcons/icon-moon-outlined.vue';
 import IconSunOutlined from '@/assets/svgIcons/icon-sun-outlined.vue';
+
+const props = defineProps<{
+  navHeight: number
+  offset?: number
+}>();
 
 const appStore = useAppStore();
 const userStore = useUserStore();
 const { logout } = useUser();
 const { changeLocale, currentLocale } = useLocale();
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
+const menuWidth = computed(() => {
+  return appStore.menuCollapse ? 48 : appStore.menuWidth;
+});
 const { token } = antTheme.useToken();
 
 const locales = [...LOCALE_OPTIONS];
@@ -221,14 +224,15 @@ const theme = computed(() => {
   return appStore.theme;
 });
 const layoutHeaderStyles = computed(() => {
-  const { colorBgContainer, colorBorder } = token.value;
-  const colors = { backgroundColor: colorBgContainer, borderBottom: `1px solid ${colorBorder}` };
+  const colors = { backgroundColor: token.value.colorBgContainer, borderBottom: `1px solid ${token.value.colorBorder}` };
   const layout = {
     position: 'fixed',
     zIndex: 100,
-    width: '100%',
+    width: `calc(100% - ${menuWidth.value - (props?.offset ?? 0)}px)`,
+    height: `${props.navHeight}px`,
     display: 'flex',
     justifyContent: 'space-between',
+    borderRadius: '30px 0 0 0',
     padding: 0,
   };
   return { ...colors, ...layout };

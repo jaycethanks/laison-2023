@@ -4,6 +4,7 @@
   import { useRoute, useRouter } from 'vue-router';
   import type { RouteMeta, RouteRecordRaw } from 'vue-router';
   import { theme as antdTheme } from 'ant-design-vue';
+  import useThemes from '../../hooks/themes';
   import useMenuTree from './use-menu-tree';
   import { useAppStore } from '@/store';
   import { listenerRouteChange } from '@/utils/route-listener';
@@ -26,18 +27,25 @@
           appStore.updateSettings({ menuCollapse: value });
         },
       });
-
       const topMenu = computed(() => appStore.topMenu);
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
+      const { isDark } = useThemes();
       const { token } = antdTheme.useToken();
 
       const goto = (item: RouteRecordRaw) => {
         // 要求缓存 + 是一个 url 链接 + 且不是外链 => 缓存的 iframe 页面
-        if (!item.meta?.ignoreCache && regexUrl.test(item.path) && !(item.meta?.external)) {
+        if (
+          !item.meta?.ignoreCache
+          && regexUrl.test(item.path)
+          && !item.meta?.external
+        ) {
           // @jayce: 注意这里的逻辑应该在最前面
           selectedKey.value = [item.name as string];
-          router.push({ path: '/iframeView/iframes', query: { name: item?.name as string, locale: item.meta.locale } });
+          router.push({
+            path: '/iframeView/iframes',
+            query: { name: item?.name as string, locale: item?.meta?.locale },
+          });
           return;
         }
 
@@ -83,9 +91,11 @@
       listenerRouteChange((newRoute) => {
         const { requiresAuth, activeMenu, hideInMenu } = newRoute.meta;
         if (requiresAuth && (!hideInMenu || activeMenu)) {
+          // if (requiresAuth && (!hideInMenu || activeMenu)) {
           const menuOpenKeys = findMenuOpenKeys(
             (activeMenu || newRoute.name) as string,
           );
+          console.log('[menuOpenKeys]: ', menuOpenKeys);
 
           const keySet = new Set([...menuOpenKeys, ...openKeys.value]);
           openKeys.value = [...keySet];
@@ -100,7 +110,6 @@
           appStore.updateSettings({ menuCollapse: val });
         }
       };
-
       const renderSubMenu = () => {
         function travel(_route: RouteRecordRaw[], nodes = []) {
           if (_route) {
@@ -124,6 +133,10 @@
                     )
                   : (
                   <a-menu-item
+                    style={{
+                      backgroundColor: 'transparent',
+                      borderRadius: '100px 0 0 100px',
+                    }}
                     key={element?.name}
                     v-slots={{ icon }}
                     onClick={() => goto(element)}
@@ -141,7 +154,11 @@
 
       return () => (
         <a-menu
-          style={{ backgroundColor: token.value.colorBgContainer, height: '100%', width: '100%' }}
+          style={{
+            backgroundColor: 'transparent',
+            height: '100%',
+            width: '100%',
+          }}
           mode={topMenu.value ? 'vertical' : 'inline'}
           v-model:collapsed={collapsed.value}
           v-model:selectedKeys={openKeys.value}
@@ -150,6 +167,7 @@
           selected-keys={selectedKey.value}
           auto-open-selected={true}
           level-indent={34}
+          selectable
           onCollapse={setCollapse}
         >
           {renderSubMenu()}
@@ -160,15 +178,12 @@
 </script>
 
 <style lang="less" scoped>
-  :deep(.arco-menu-inner) {
-    .arco-menu-inline-header {
-      display: flex;
-      align-items: center;
-    }
-    .arco-icon {
-      &:not(.arco-icon-down) {
-        font-size: 18px;
-      }
+  :deep(.ant-menu-item.ant-menu-item-selected) {
+    background-color: #fff !important;
+  }
+  body[laison-theme='dark'] {
+     :deep(.ant-menu-item.ant-menu-item-selected) {
+      background-color: #000 !important;
     }
   }
 </style>

@@ -29,6 +29,11 @@ import {
 } from '@/utils/route-listener';
 import { useAppStore, useTabBarStore } from '@/store';
 
+const props = defineProps<{
+  navHeight: number
+  offset?: number
+}>();
+
 const { token } = antdTheme.useToken();
 const appStore = useAppStore();
 const tabBarStore = useTabBarStore();
@@ -38,7 +43,7 @@ const tagList = computed(() => {
   return tabBarStore.getTabList;
 });
 const offsetTop = computed(() => {
-  return appStore.navbar ? 60 : 0;
+  return appStore.navbar ? props.navHeight : 0;
 });
 
 watch(
